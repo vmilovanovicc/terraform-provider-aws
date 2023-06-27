@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package apigatewayv2
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_apigatewayv2_api", &resource.Sweeper{
 		Name: "aws_apigatewayv2_api",
 		F:    sweepAPIs,

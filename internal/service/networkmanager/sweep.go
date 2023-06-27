@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package networkmanager
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_networkmanager_global_network", &resource.Sweeper{
 		Name: "aws_networkmanager_global_network",
 		F:    sweepGlobalNetworks,

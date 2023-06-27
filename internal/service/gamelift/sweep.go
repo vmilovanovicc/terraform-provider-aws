@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package gamelift
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_gamelift_alias", &resource.Sweeper{
 		Name: "aws_gamelift_alias",
 		Dependencies: []string{

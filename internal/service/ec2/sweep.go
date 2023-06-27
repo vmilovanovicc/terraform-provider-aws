@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package ec2
 
 import (
@@ -20,7 +17,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/framework"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_customer_gateway", &resource.Sweeper{
 		Name: "aws_customer_gateway",
 		F:    sweepCustomerGateways,

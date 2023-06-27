@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package configservice
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_config_aggregate_authorization", &resource.Sweeper{
 		Name: "aws_config_aggregate_authorization",
 		F:    sweepAggregateAuthorizations,

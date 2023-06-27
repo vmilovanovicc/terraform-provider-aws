@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_resourcegroups_group", &resource.Sweeper{
 		Name: "aws_resourcegroups_group",
 		F:    sweepGroups,

@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package dms
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_dms_replication_instance", &resource.Sweeper{
 		Name: "aws_dms_replication_instance",
 		F:    sweepReplicationInstances,

@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package pipes
 
 import (
@@ -13,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_pipes_pipe", &resource.Sweeper{
 		Name: "aws_pipes_pipe",
 		F:    sweepPipes,

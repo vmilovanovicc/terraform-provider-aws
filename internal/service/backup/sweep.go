@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package backup
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_backup_framework", &resource.Sweeper{
 		Name: "aws_backup_framework",
 		F:    sweepFramework,

@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package docdb
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_docdb_global_cluster", &resource.Sweeper{
 		Name: "aws_docdb_global_cluster",
 		F:    sweepGlobalClusters,

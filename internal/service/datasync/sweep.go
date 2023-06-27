@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package datasync
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_datasync_agent", &resource.Sweeper{
 		Name: "aws_datasync_agent",
 		F:    sweepAgents,

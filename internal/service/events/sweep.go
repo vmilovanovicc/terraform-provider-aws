@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package events
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_cloudwatch_event_api_destination", &resource.Sweeper{
 		Name: "aws_cloudwatch_event_api_destination",
 		F:    sweepAPIDestination,

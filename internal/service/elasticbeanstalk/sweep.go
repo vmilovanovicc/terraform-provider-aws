@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package elasticbeanstalk
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_elastic_beanstalk_application", &resource.Sweeper{
 		Name:         "aws_elastic_beanstalk_application",
 		Dependencies: []string{"aws_elastic_beanstalk_environment"},

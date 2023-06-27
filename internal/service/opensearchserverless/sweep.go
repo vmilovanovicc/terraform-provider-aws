@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package opensearchserverless
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/framework"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_opensearchserverless_access_policy", &resource.Sweeper{
 		Name: "aws_opensearchserverless_access_policy",
 		F:    sweepAccessPolicies,

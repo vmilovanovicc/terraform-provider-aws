@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package kinesisanalytics
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_kinesis_analytics_application", &resource.Sweeper{
 		Name: "aws_kinesis_analytics_application",
 		F:    sweepApplications,

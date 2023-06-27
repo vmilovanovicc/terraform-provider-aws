@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package iot
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_iot_certificate", &resource.Sweeper{
 		Name: "aws_iot_certificate",
 		F:    sweepCertifcates,

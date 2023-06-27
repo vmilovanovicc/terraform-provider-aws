@@ -145,7 +145,6 @@ gen:
 	rm -f internal/conns/*_gen.go
 	rm -f internal/provider/*_gen.go
 	rm -f internal/service/**/*_gen.go
-	rm -f internal/sweep/sweep_test.go internal/sweep/service_packages_gen_test.go
 	rm -f names/caps.md
 	rm -f names/*_gen.go
 	rm -f website/docs/guides/custom-service-endpoints.html.md
@@ -156,7 +155,6 @@ gen:
 	# Generate service package lists last as they may depend on output of earlier generators.
 	rm -f internal/provider/service_packages_gen.go
 	$(GO_VER) generate ./internal/provider
-	rm -f internal/sweep/sweep_test.go internal/sweep/service_packages_gen_test.go
 	$(GO_VER) generate ./internal/sweep
 
 gencheck:

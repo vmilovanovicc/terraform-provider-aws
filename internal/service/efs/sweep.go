@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package efs
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_efs_access_point", &resource.Sweeper{
 		Name: "aws_efs_access_point",
 		F:    sweepAccessPoints,

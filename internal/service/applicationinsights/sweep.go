@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package applicationinsights
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_applicationinsights_application", &resource.Sweeper{
 		Name: "aws_applicationinsights_application",
 		F:    sweepApplications,

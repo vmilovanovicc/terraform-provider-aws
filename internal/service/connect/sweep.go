@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package connect
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_connect_instance", &resource.Sweeper{
 		Name: "aws_connect_instance",
 		F:    sweepInstance,

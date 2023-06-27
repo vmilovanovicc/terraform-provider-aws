@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package schemas
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_schemas_discoverer", &resource.Sweeper{
 		Name: "aws_schemas_discoverer",
 		F:    sweepDiscoverers,

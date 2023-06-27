@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package acmpca
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_acmpca_certificate_authority", &resource.Sweeper{
 		Name: "aws_acmpca_certificate_authority",
 		F:    sweepCertificateAuthorities,

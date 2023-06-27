@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package ecs
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_ecs_capacity_provider", &resource.Sweeper{
 		Name: "aws_ecs_capacity_provider",
 		F:    sweepCapacityProviders,

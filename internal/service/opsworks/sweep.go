@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package opsworks
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_opsworks_stack", &resource.Sweeper{
 		Name: "aws_opsworks_stack",
 		F:    sweepStacks,

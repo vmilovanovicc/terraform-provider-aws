@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package lightsail
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_lightsail_container_service", &resource.Sweeper{
 		Name: "aws_lightsail_container_service",
 		F:    sweepContainerServices,

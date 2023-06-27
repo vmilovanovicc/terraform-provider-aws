@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package ram
 
 import (
@@ -13,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_ram_resource_share", &resource.Sweeper{
 		Name: "aws_ram_resource_share",
 		F:    sweepResourceShares,

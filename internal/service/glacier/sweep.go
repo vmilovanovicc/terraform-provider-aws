@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package glacier
 
 import (
@@ -13,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_glacier_vault", &resource.Sweeper{
 		Name: "aws_glacier_vault",
 		F:    sweepVaults,

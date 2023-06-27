@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package firehose
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_kinesis_firehose_delivery_stream", &resource.Sweeper{
 		Name: "aws_kinesis_firehose_delivery_stream",
 		F:    sweepDeliveryStreams,

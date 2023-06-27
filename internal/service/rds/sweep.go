@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package rds
 
 import (
@@ -17,7 +14,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_rds_cluster_parameter_group", &resource.Sweeper{
 		Name: "aws_rds_cluster_parameter_group",
 		F:    sweepClusterParameterGroups,

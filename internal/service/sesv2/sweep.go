@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package sesv2
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_sesv2_configuration_set", &resource.Sweeper{
 		Name: "aws_sesv2_configuration_set",
 		F:    sweepConfigurationSets,

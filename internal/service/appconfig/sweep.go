@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package appconfig
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/framework"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_appconfig_application", &resource.Sweeper{
 		Name: "aws_appconfig_application",
 		F:    sweepApplications,

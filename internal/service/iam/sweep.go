@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package iam
 
 import (
@@ -18,7 +15,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/sdk"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_iam_group", &resource.Sweeper{
 		Name: "aws_iam_group",
 		F:    sweepGroups,

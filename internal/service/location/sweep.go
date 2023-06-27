@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package location
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_location_geofence_collection", &resource.Sweeper{
 		Name: "aws_location_geofence_collection",
 		F:    sweepGeofenceCollections,

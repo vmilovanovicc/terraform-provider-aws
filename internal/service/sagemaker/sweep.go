@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package sagemaker
 
 import (
@@ -15,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_sagemaker_app_image_config", &resource.Sweeper{
 		Name: "aws_sagemaker_app_image_config",
 		F:    sweepAppImagesConfig,

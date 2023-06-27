@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package auditmanager
 
 import (
@@ -17,7 +14,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/framework"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_auditmanager_assessment", &resource.Sweeper{
 		Name: "aws_auditmanager_assessment",
 		F:    sweepAssessments,

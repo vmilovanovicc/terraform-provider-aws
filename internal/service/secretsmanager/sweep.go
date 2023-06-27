@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package secretsmanager
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_secretsmanager_secret_policy", &resource.Sweeper{
 		Name: "aws_secretsmanager_secret_policy",
 		F:    sweepSecretPolicies,

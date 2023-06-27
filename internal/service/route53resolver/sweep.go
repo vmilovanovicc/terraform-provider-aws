@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package route53resolver
 
 import (
@@ -14,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_route53_resolver_dnssec_config", &resource.Sweeper{
 		Name: "aws_route53_resolver_dnssec_config",
 		F:    sweepDNSSECConfig,

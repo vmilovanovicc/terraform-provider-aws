@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package ssm
 
 import (
@@ -23,7 +20,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/tfresource"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_ssm_default_patch_baseline", &resource.Sweeper{
 		Name: "aws_ssm_default_patch_baseline",
 		F:    sweepResourceDefaultPatchBaselines,

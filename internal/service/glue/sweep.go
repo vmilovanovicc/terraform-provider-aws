@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package glue
 
 import (
@@ -16,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 )
 
-func init() {
+func RegisterSweepers() {
 	resource.AddTestSweepers("aws_glue_catalog_database", &resource.Sweeper{
 		Name: "aws_glue_catalog_database",
 		F:    sweepCatalogDatabases,
