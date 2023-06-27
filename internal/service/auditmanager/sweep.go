@@ -54,17 +54,14 @@ func RegisterSweepers() {
 // AccessDeniedException: Please complete AWS Audit Manager setup from home page to enable this action in this account.
 func isCompleteSetupError(err error) bool {
 	var ade *types.AccessDeniedException
-	if errors.As(err, &ade) {
-		return true
-	}
-	return false
+	return errors.As(err, &ade)
 }
 
 func sweepAssessments(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)
@@ -109,7 +106,7 @@ func sweepAssessmentDelegations(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)
@@ -153,7 +150,7 @@ func sweepAssessmentReports(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)
@@ -199,7 +196,7 @@ func sweepControls(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)
@@ -244,7 +241,7 @@ func sweepFrameworks(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)
@@ -289,7 +286,7 @@ func sweepFrameworkShares(region string) error {
 	ctx := sweep.Context(region)
 	client, err := sweep.SharedRegionalSweepClient(ctx, region)
 	if err != nil {
-		fmt.Errorf("error getting client: %s", err)
+		return fmt.Errorf("error getting client: %s", err)
 	}
 
 	conn := client.AuditManagerClient(ctx)

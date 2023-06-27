@@ -16,7 +16,6 @@ func RegisterSweepers() {
 		Name: "aws_dlm_lifecycle_policy",
 		F:    sweepLifecyclePolicies,
 	})
-
 }
 
 func sweepLifecyclePolicies(region string) error {

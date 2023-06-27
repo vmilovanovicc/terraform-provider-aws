@@ -133,7 +133,6 @@ func sweepWorkspace(region string) error {
 			if err != nil {
 				errors = multierror.Append(errors, err)
 			}
-
 		}
 		return true
 	})

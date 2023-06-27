@@ -350,7 +350,6 @@ func sweepMonitoringSubscriptions(region string) error {
 	}
 
 	for _, distributionSummary := range distributionSummaries {
-
 		_, err := conn.GetMonitoringSubscriptionWithContext(ctx, &cloudfront.GetMonitoringSubscriptionInput{
 			DistributionId: distributionSummary.Id,
 		})

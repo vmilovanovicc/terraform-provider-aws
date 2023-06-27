@@ -37,7 +37,6 @@ func sweepWorkSpaces(region string) error {
 			return false
 		}
 		for _, workspace := range page.Workspaces {
-
 			id := aws.StringValue(workspace.Id)
 			log.Printf("[INFO] Deleting Grafana Workspace: %s", id)
 			r := ResourceWorkspace()

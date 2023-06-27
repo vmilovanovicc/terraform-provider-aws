@@ -362,6 +362,13 @@ func sweepServiceSpecificCredentials(region string) error {
 
 		return !lastPage
 	})
+	if sweep.SkipSweepError(err) {
+		log.Printf("[WARN] Skipping IAM Service Specific Credential sweep for %s: %s", region, err)
+		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
+	}
+	if err != nil {
+		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("listing IAM Users: %w", err))
+	}
 
 	for _, user := range users {
 		out, err := conn.ListServiceSpecificCredentialsWithContext(ctx, &iam.ListServiceSpecificCredentialsInput{
@@ -369,7 +376,6 @@ func sweepServiceSpecificCredentials(region string) error {
 		})
 
 		for _, cred := range out.ServiceSpecificCredentials {
-
 			id := fmt.Sprintf("%s:%s:%s", aws.StringValue(cred.ServiceName), aws.StringValue(cred.UserName), aws.StringValue(cred.ServiceSpecificCredentialId))
 
 			r := ResourceServiceSpecificCredential()
@@ -389,7 +395,6 @@ func sweepServiceSpecificCredentials(region string) error {
 			log.Printf("[WARN] Skipping IAM Service Specific Credential sweep for %s: %s", region, err)
 			return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
 		}
-
 		if err != nil {
 			sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Service Specific Credentials: %w", err))
 		}
@@ -964,6 +969,14 @@ func sweepSigningCertificates(region string) error {
 
 		return !lastPage
 	})
+	if sweep.SkipSweepError(err) {
+		log.Printf("[WARN] Skipping IAM Signing Certificate sweep for %s: %s", region, err)
+		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
+	}
+
+	if err != nil {
+		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("listing IAM Users: %w", err))
+	}
 
 	for _, user := range users {
 		out, err := conn.ListSigningCertificatesWithContext(ctx, &iam.ListSigningCertificatesInput{
@@ -971,7 +984,6 @@ func sweepSigningCertificates(region string) error {
 		})
 
 		for _, cert := range out.Certificates {
-
 			id := fmt.Sprintf("%s:%s", aws.StringValue(cert.CertificateId), aws.StringValue(cert.UserName))
 
 			r := ResourceSigningCertificate()
@@ -991,7 +1003,6 @@ func sweepSigningCertificates(region string) error {
 			log.Printf("[WARN] Skipping IAM Signing Certificate sweep for %s: %s", region, err)
 			return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
 		}
-
 		if err != nil {
 			sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Signing Certificates: %w", err))
 		}

@@ -24,7 +24,6 @@ func RegisterSweepers() {
 		Name: "aws_qldb_stream",
 		F:    sweepStreams,
 	})
-
 }
 
 func sweepLedgers(region string) error {

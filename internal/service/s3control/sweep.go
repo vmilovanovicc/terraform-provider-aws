@@ -59,12 +59,12 @@ func sweepAccessPoints(region string) error {
 		for _, v := range page.AccessPointList {
 			r := resourceAccessPoint()
 			d := r.Data(nil)
-			if id, err := AccessPointCreateResourceID(aws.StringValue(v.AccessPointArn)); err != nil {
+			id, err := AccessPointCreateResourceID(aws.StringValue(v.AccessPointArn))
+			if err != nil {
 				sweeperErrs = multierror.Append(sweeperErrs, err)
 				continue
-			} else {
-				d.SetId(id)
 			}
+			d.SetId(id)
 
 			sweepResources = append(sweepResources, sweep.NewSweepResource(r, d, client))
 		}
@@ -155,7 +155,7 @@ func sweepObjectLambdaAccessPoints(region string) error {
 	}
 	sweepResources := make([]sweep.Sweepable, 0)
 
-	conn.ListAccessPointsForObjectLambdaPagesWithContext(ctx, input, func(page *s3control.ListAccessPointsForObjectLambdaOutput, lastPage bool) bool {
+	err = conn.ListAccessPointsForObjectLambdaPagesWithContext(ctx, input, func(page *s3control.ListAccessPointsForObjectLambdaOutput, lastPage bool) bool {
 		if page == nil {
 			return !lastPage
 		}
@@ -202,7 +202,7 @@ func sweepStorageLensConfigurations(region string) error {
 	}
 	sweepResources := make([]sweep.Sweepable, 0)
 
-	conn.ListStorageLensConfigurationsPagesWithContext(ctx, input, func(page *s3control.ListStorageLensConfigurationsOutput, lastPage bool) bool {
+	err = conn.ListStorageLensConfigurationsPagesWithContext(ctx, input, func(page *s3control.ListStorageLensConfigurationsOutput, lastPage bool) bool {
 		if page == nil {
 			return !lastPage
 		}

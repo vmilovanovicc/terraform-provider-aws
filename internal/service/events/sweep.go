@@ -98,7 +98,6 @@ func sweepAPIDestination(region string) error {
 	}
 
 	for _, apiDestination := range apiDestinations {
-
 		input := &eventbridge.DeleteApiDestinationInput{
 			Name: apiDestination.Name,
 		}

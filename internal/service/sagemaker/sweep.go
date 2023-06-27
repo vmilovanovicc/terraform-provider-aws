@@ -112,9 +112,14 @@ func RegisterSweepers() {
 		},
 	})
 
+	resource.AddTestSweepers("aws_sagemaker_project", &resource.Sweeper{
+		Name: "aws_sagemaker_project",
+		F:    sweepProjects,
+	})
+
 	resource.AddTestSweepers("aws_sagemaker_space", &resource.Sweeper{
 		Name: "aws_sagemaker_space",
-		F:    sweepUserProfiles,
+		F:    sweepSpaces,
 		Dependencies: []string{
 			"aws_sagemaker_app",
 		},
@@ -139,11 +144,6 @@ func RegisterSweepers() {
 	resource.AddTestSweepers("aws_sagemaker_workteam", &resource.Sweeper{
 		Name: "aws_sagemaker_workteam",
 		F:    sweepWorkteams,
-	})
-
-	resource.AddTestSweepers("aws_sagemaker_project", &resource.Sweeper{
-		Name: "aws_sagemaker_project",
-		F:    sweepProjects,
 	})
 }
 
@@ -173,7 +173,6 @@ func sweepAppImagesConfig(region string) error {
 		}
 
 		for _, config := range output.AppImageConfigs {
-
 			name := aws.StringValue(config.AppImageConfigName)
 			r := ResourceAppImageConfig()
 			d := r.Data(nil)
@@ -209,7 +208,6 @@ func sweepSpaces(region string) error {
 
 	err = conn.ListSpacesPagesWithContext(ctx, &sagemaker.ListSpacesInput{}, func(page *sagemaker.ListSpacesOutput, lastPage bool) bool {
 		for _, space := range page.Spaces {
-
 			r := ResourceSpace()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(space.SpaceName))
@@ -250,7 +248,6 @@ func sweepApps(region string) error {
 
 	err = conn.ListAppsPagesWithContext(ctx, &sagemaker.ListAppsInput{}, func(page *sagemaker.ListAppsOutput, lastPage bool) bool {
 		for _, app := range page.Apps {
-
 			if aws.StringValue(app.Status) == sagemaker.AppStatusDeleted {
 				continue
 			}
@@ -376,7 +373,6 @@ func sweepDomains(region string) error {
 
 	err = conn.ListDomainsPagesWithContext(ctx, &sagemaker.ListDomainsInput{}, func(page *sagemaker.ListDomainsOutput, lastPage bool) bool {
 		for _, domain := range page.Domains {
-
 			r := ResourceDomain()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(domain.DomainId))
@@ -528,7 +524,6 @@ func sweepFlowDefinitions(region string) error {
 
 	err = conn.ListFlowDefinitionsPagesWithContext(ctx, &sagemaker.ListFlowDefinitionsInput{}, func(page *sagemaker.ListFlowDefinitionsOutput, lastPage bool) bool {
 		for _, flowDefinition := range page.FlowDefinitionSummaries {
-
 			r := ResourceFlowDefinition()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(flowDefinition.FlowDefinitionName))
@@ -567,7 +562,6 @@ func sweepHumanTaskUIs(region string) error {
 
 	err = conn.ListHumanTaskUisPagesWithContext(ctx, &sagemaker.ListHumanTaskUisInput{}, func(page *sagemaker.ListHumanTaskUisOutput, lastPage bool) bool {
 		for _, humanTaskUi := range page.HumanTaskUiSummaries {
-
 			r := ResourceHumanTaskUI()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(humanTaskUi.HumanTaskUiName))
@@ -682,7 +676,6 @@ func sweepModels(region string) error {
 
 	err = conn.ListModelsPagesWithContext(ctx, &sagemaker.ListModelsInput{}, func(page *sagemaker.ListModelsOutput, lastPage bool) bool {
 		for _, model := range page.Models {
-
 			r := ResourceModel()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(model.ModelName))
@@ -803,7 +796,6 @@ func sweepStudioLifecyclesConfig(region string) error {
 
 	err = conn.ListStudioLifecycleConfigsPagesWithContext(ctx, &sagemaker.ListStudioLifecycleConfigsInput{}, func(page *sagemaker.ListStudioLifecycleConfigsOutput, lastPage bool) bool {
 		for _, config := range page.StudioLifecycleConfigs {
-
 			r := ResourceStudioLifecycleConfig()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(config.StudioLifecycleConfigName))
@@ -842,7 +834,6 @@ func sweepUserProfiles(region string) error {
 
 	err = conn.ListUserProfilesPagesWithContext(ctx, &sagemaker.ListUserProfilesInput{}, func(page *sagemaker.ListUserProfilesOutput, lastPage bool) bool {
 		for _, userProfile := range page.UserProfiles {
-
 			r := ResourceUserProfile()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(userProfile.UserProfileName))
@@ -883,7 +874,6 @@ func sweepWorkforces(region string) error {
 
 	err = conn.ListWorkforcesPagesWithContext(ctx, &sagemaker.ListWorkforcesInput{}, func(page *sagemaker.ListWorkforcesOutput, lastPage bool) bool {
 		for _, workforce := range page.Workforces {
-
 			r := ResourceWorkforce()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(workforce.WorkforceName))
@@ -922,7 +912,6 @@ func sweepWorkteams(region string) error {
 
 	err = conn.ListWorkteamsPagesWithContext(ctx, &sagemaker.ListWorkteamsInput{}, func(page *sagemaker.ListWorkteamsOutput, lastPage bool) bool {
 		for _, workteam := range page.Workteams {
-
 			r := ResourceWorkteam()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(workteam.WorkteamName))

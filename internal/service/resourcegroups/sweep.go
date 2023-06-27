@@ -1,6 +1,3 @@
-//go:build sweep
-// +build sweep
-
 package resourcegroups
 
 import (

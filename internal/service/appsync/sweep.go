@@ -58,7 +58,6 @@ func sweepGraphQLAPIs(region string) error {
 		}
 
 		for _, graphAPI := range output.GraphqlApis {
-
 			r := ResourceGraphQLAPI()
 			d := r.Data(nil)
 
@@ -114,7 +113,6 @@ func sweepDomainNames(region string) error {
 		}
 
 		for _, dm := range output.DomainNameConfigs {
-
 			r := ResourceDomainName()
 			d := r.Data(nil)
 
@@ -170,7 +168,6 @@ func sweepDomainNameAssociations(region string) error {
 		}
 
 		for _, dm := range output.DomainNameConfigs {
-
 			r := ResourceDomainNameAPIAssociation()
 			d := r.Data(nil)
 
