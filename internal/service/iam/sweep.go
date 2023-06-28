@@ -1,6 +1,7 @@
 package iam
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"regexp"
@@ -10,7 +11,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/hashicorp/aws-sdk-go-base/v2/awsv1shim/v2/tfawserr"
 	"github.com/hashicorp/go-multierror"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep"
 	"github.com/hashicorp/terraform-provider-aws/internal/sweep/sdk"
 )
@@ -24,16 +27,11 @@ func RegisterSweepers() {
 		},
 	})
 
-	resource.AddTestSweepers("aws_iam_instance_profile", &resource.Sweeper{
-		Name:         "aws_iam_instance_profile",
-		F:            sweepInstanceProfile,
-		Dependencies: []string{"aws_iam_role"},
-	})
+	sweep.Register("aws_iam_instance_profile", sweepInstanceProfile,
+		"aws_iam_role",
+	)
 
-	resource.AddTestSweepers("aws_iam_openid_connect_provider", &resource.Sweeper{
-		Name: "aws_iam_openid_connect_provider",
-		F:    sweepOpenIDConnectProvider,
-	})
+	sweep.Register("aws_iam_openid_connect_provider", sweepOpenIDConnectProvider)
 
 	resource.AddTestSweepers("aws_iam_policy", &resource.Sweeper{
 		Name: "aws_iam_policy",
@@ -75,30 +73,18 @@ func RegisterSweepers() {
 		F: sweepRoles,
 	})
 
-	resource.AddTestSweepers("aws_iam_saml_provider", &resource.Sweeper{
-		Name: "aws_iam_saml_provider",
-		F:    sweepSAMLProvider,
-	})
+	sweep.Register("aws_iam_saml_provider", sweepSAMLProvider)
 
-	resource.AddTestSweepers("aws_iam_service_specific_credential", &resource.Sweeper{
-		Name: "aws_iam_service_specific_credential",
-		F:    sweepServiceSpecificCredentials,
-	})
+	sweep.Register("aws_iam_service_specific_credential", sweepServiceSpecificCredentials)
 
-	resource.AddTestSweepers("aws_iam_signing_certificate", &resource.Sweeper{
-		Name: "aws_iam_signing_certificate",
-		F:    sweepSigningCertificates,
-	})
+	sweep.Register("aws_iam_signing_certificate", sweepSigningCertificates)
 
 	resource.AddTestSweepers("aws_iam_server_certificate", &resource.Sweeper{
 		Name: "aws_iam_server_certificate",
 		F:    sweepServerCertificates,
 	})
 
-	resource.AddTestSweepers("aws_iam_service_linked_role", &resource.Sweeper{
-		Name: "aws_iam_service_linked_role",
-		F:    sweepServiceLinkedRoles,
-	})
+	sweep.Register("aws_iam_service_linked_role", sweepServiceLinkedRoles)
 
 	resource.AddTestSweepers("aws_iam_user", &resource.Sweeper{
 		Name: "aws_iam_user",
@@ -111,10 +97,7 @@ func RegisterSweepers() {
 		},
 	})
 
-	resource.AddTestSweepers("aws_iam_virtual_mfa_device", &resource.Sweeper{
-		Name: "aws_iam_virtual_mfa_device",
-		F:    sweepVirtualMFADevice,
-	})
+	sweep.Register("aws_iam_virtual_mfa_device", sweepVirtualMFADevice)
 }
 
 func sweepGroups(region string) error {
@@ -233,17 +216,13 @@ func sweepGroups(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func sweepInstanceProfile(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
+func sweepInstanceProfile(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
 
+	var sweepResources []sweep.Sweepable
 	var sweeperErrs *multierror.Error
 
-	err = conn.ListInstanceProfilesPagesWithContext(ctx, &iam.ListInstanceProfilesInput{}, func(page *iam.ListInstanceProfilesOutput, lastPage bool) bool {
+	err := conn.ListInstanceProfilesPagesWithContext(ctx, &iam.ListInstanceProfilesInput{}, func(page *iam.ListInstanceProfilesOutput, lastPage bool) bool {
 		if page == nil {
 			return !lastPage
 		}
@@ -252,7 +231,10 @@ func sweepInstanceProfile(region string) error {
 			name := aws.StringValue(instanceProfile.InstanceProfileName)
 
 			if !roleNameFilter(name) {
-				log.Printf("[INFO] Skipping IAM Instance Profile (%s): no match on allow-list", name)
+				tflog.Warn(ctx, "Skipping resource", map[string]any{
+					"skip_reason":           "no match on allow-list",
+					"instance_profile_name": name,
+				})
 				continue
 			}
 
@@ -267,41 +249,24 @@ func sweepInstanceProfile(region string) error {
 				d.Set("role", roles[0].RoleName)
 			}
 
-			log.Printf("[INFO] Sweeping IAM Instance Profile %q", name)
-			err := sdk.DeleteResource(ctx, r, d, client)
-
-			if err != nil {
-				sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error deleting IAM Instance Profile (%s): %w", name, err))
-				continue
-			}
+			sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 		}
 
 		return !lastPage
 	})
 
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM Instance Profile sweep for %q: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error listing IAM Instance Profiles: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, multierror.Append(err, sweeperErrs)
 }
 
-func sweepOpenIDConnectProvider(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
+func sweepOpenIDConnectProvider(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
 
-	var sweeperErrs *multierror.Error
+	var sweepResources []sweep.Sweepable
 
 	out, err := conn.ListOpenIDConnectProvidersWithContext(ctx, &iam.ListOpenIDConnectProvidersInput{})
+	if err != nil {
+		return sweepResources, err
+	}
 
 	for _, oidcProvider := range out.OpenIDConnectProviderList {
 		arn := aws.StringValue(oidcProvider.Arn)
@@ -309,37 +274,15 @@ func sweepOpenIDConnectProvider(region string) error {
 		r := ResourceOpenIDConnectProvider()
 		d := r.Data(nil)
 		d.SetId(arn)
-		err := sdk.DeleteResource(ctx, r, d, client)
 
-		if err != nil {
-			sweeperErr := fmt.Errorf("error deleting IAM OIDC Provider (%s): %w", arn, err)
-			log.Printf("[ERROR] %s", sweeperErr)
-			sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-			continue
-		}
+		sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 	}
 
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM OIDC Provider sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM OIDC Providers: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
 
-func sweepServiceSpecificCredentials(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
+func sweepServiceSpecificCredentials(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
-
-	var sweeperErrs *multierror.Error
 
 	prefixes := []string{
 		"test-user",
@@ -348,9 +291,9 @@ func sweepServiceSpecificCredentials(region string) error {
 		"tf_acc",
 	}
 
-	users := make([]*iam.User, 0)
+	var users []*iam.User
 
-	err = conn.ListUsersPagesWithContext(ctx, &iam.ListUsersInput{}, func(page *iam.ListUsersOutput, lastPage bool) bool {
+	err := conn.ListUsersPagesWithContext(ctx, &iam.ListUsersInput{}, func(page *iam.ListUsersOutput, lastPage bool) bool {
 		for _, user := range page.Users {
 			for _, prefix := range prefixes {
 				if strings.HasPrefix(aws.StringValue(user.UserName), prefix) {
@@ -362,18 +305,23 @@ func sweepServiceSpecificCredentials(region string) error {
 
 		return !lastPage
 	})
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM Service Specific Credential sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
 	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("listing IAM Users: %w", err))
+		return nil, err
 	}
+
+	var sweepResources []sweep.Sweepable
 
 	for _, user := range users {
 		out, err := conn.ListServiceSpecificCredentialsWithContext(ctx, &iam.ListServiceSpecificCredentialsInput{
 			UserName: user.UserName,
 		})
+		if err != nil {
+			tflog.Warn(ctx, "Skipping resource", map[string]any{
+				"error":     err.Error(),
+				"user_name": user.UserName,
+			})
+			continue
+		}
 
 		for _, cred := range out.ServiceSpecificCredentials {
 			id := fmt.Sprintf("%s:%s:%s", aws.StringValue(cred.ServiceName), aws.StringValue(cred.UserName), aws.StringValue(cred.ServiceSpecificCredentialId))
@@ -381,26 +329,12 @@ func sweepServiceSpecificCredentials(region string) error {
 			r := ResourceServiceSpecificCredential()
 			d := r.Data(nil)
 			d.SetId(id)
-			err := sdk.DeleteResource(ctx, r, d, client)
 
-			if err != nil {
-				sweeperErr := fmt.Errorf("error deleting IAM Service Specific Credential (%s): %w", id, err)
-				log.Printf("[ERROR] %s", sweeperErr)
-				sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-				continue
-			}
-		}
-
-		if sweep.SkipSweepError(err) {
-			log.Printf("[WARN] Skipping IAM Service Specific Credential sweep for %s: %s", region, err)
-			return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-		}
-		if err != nil {
-			sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Service Specific Credentials: %w", err))
+			sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 		}
 	}
 
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
 
 func sweepPolicies(region string) error {
@@ -426,7 +360,7 @@ func sweepPolicies(region string) error {
 			d := r.Data(nil)
 			d.SetId(arn)
 
-			err := sweep.NewSweepResource(r, d, client).Delete(ctx, sweep.ThrottlingRetryTimeout) // nosemgrep:ci.semgrep.migrate.direct-CRUD-calls
+			err := sdk.NewSweepResource(r, d, client).Delete(ctx, sweep.ThrottlingRetryTimeout) // nosemgrep:ci.semgrep.migrate.direct-CRUD-calls
 
 			// Treat this sweeper as best effort for now. There are a lot of edge cases
 			// with lingering aws_iam_role resources in the HashiCorp testing accounts.
@@ -522,17 +456,15 @@ func sweepRoles(region string) error {
 	return sweeperErrs.ErrorOrNil()
 }
 
-func sweepSAMLProvider(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
+func sweepSAMLProvider(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
 
-	var sweeperErrs *multierror.Error
+	var sweepResources []sweep.Sweepable
 
 	out, err := conn.ListSAMLProvidersWithContext(ctx, &iam.ListSAMLProvidersInput{})
+	if err != nil {
+		return sweepResources, err
+	}
 
 	for _, sampProvider := range out.SAMLProviderList {
 		arn := aws.StringValue(sampProvider.Arn)
@@ -540,26 +472,11 @@ func sweepSAMLProvider(region string) error {
 		r := ResourceSAMLProvider()
 		d := r.Data(nil)
 		d.SetId(arn)
-		err := sdk.DeleteResource(ctx, r, d, client)
 
-		if err != nil {
-			sweeperErr := fmt.Errorf("error deleting IAM SAML Provider (%s): %w", arn, err)
-			log.Printf("[ERROR] %s", sweeperErr)
-			sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-			continue
-		}
+		sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 	}
 
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM SAML Provider sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM SAML Providers: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
 
 func sweepServerCertificates(region string) error {
@@ -596,14 +513,11 @@ func sweepServerCertificates(region string) error {
 	return nil
 }
 
-func sweepServiceLinkedRoles(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %s", err)
-	}
+func sweepServiceLinkedRoles(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
-	var sweeperErrs *multierror.Error
+
+	var sweepResources []sweep.Sweepable
+
 	input := &iam.ListRolesInput{
 		PathPrefix: aws.String("/aws-service-role/"),
 	}
@@ -612,43 +526,33 @@ func sweepServiceLinkedRoles(region string) error {
 	// TestAccIAMServiceLinkedRole_basic
 	// TestAccIAMServiceLinkedRole_CustomSuffix_diffSuppressFunc
 	customSuffixRegex := regexp.MustCompile(`_?(tf-acc-test-\d+|ServiceRoleFor(ApplicationAutoScaling_CustomResource|ElasticBeanstalk))$`)
-	err = conn.ListRolesPagesWithContext(ctx, input, func(page *iam.ListRolesOutput, lastPage bool) bool {
-		if len(page.Roles) == 0 {
-			log.Printf("[INFO] No IAM Service Roles to sweep")
-			return true
+	err := conn.ListRolesPagesWithContext(ctx, input, func(page *iam.ListRolesOutput, lastPage bool) bool {
+		if page == nil {
+			return !lastPage
 		}
+
 		for _, role := range page.Roles {
 			roleName := aws.StringValue(role.RoleName)
 
 			if !customSuffixRegex.MatchString(roleName) {
-				log.Printf("[INFO] Skipping IAM Service Role: %s", roleName)
+				tflog.Warn(ctx, "Skipping resource", map[string]any{
+					"skip_reason": "no match",
+					"role_name":   roleName,
+				})
 				continue
 			}
 
 			r := ResourceServiceLinkedRole()
 			d := r.Data(nil)
 			d.SetId(aws.StringValue(role.Arn))
-			err := sdk.DeleteResource(ctx, r, d, client)
-			if err != nil {
-				sweeperErr := fmt.Errorf("error deleting IAM Service Linked Role (%s): %w", roleName, err)
-				log.Printf("[ERROR] %s", sweeperErr)
-				sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-				continue
-			}
+
+			sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 		}
+
 		return !lastPage
 	})
 
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM Service Role sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Service Roles: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
 
 func sweepUsers(region string) error {
@@ -889,64 +793,41 @@ func roleNameFilter(name string) bool {
 	return false
 }
 
-func sweepVirtualMFADevice(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %s", err)
-	}
+func sweepVirtualMFADevice(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
-	var sweeperErrs *multierror.Error
+	var sweepResources []sweep.Sweepable
+
 	input := &iam.ListVirtualMFADevicesInput{}
 
-	err = conn.ListVirtualMFADevicesPagesWithContext(ctx, input, func(page *iam.ListVirtualMFADevicesOutput, lastPage bool) bool {
-		if len(page.VirtualMFADevices) == 0 {
-			log.Printf("[INFO] No IAM Virtual MFA Devices to sweep")
-			return true
+	err := conn.ListVirtualMFADevicesPagesWithContext(ctx, input, func(page *iam.ListVirtualMFADevicesOutput, lastPage bool) bool {
+		if page == nil {
+			return !lastPage
 		}
+
 		for _, device := range page.VirtualMFADevices {
 			serialNum := aws.StringValue(device.SerialNumber)
 
 			if strings.Contains(serialNum, "root-account-mfa-device") {
-				log.Printf("[INFO] Skipping IAM Root Virtual MFA Device: %s", device)
+				tflog.Warn(ctx, "Skipping: IAM Root Virtual MFA Device", map[string]any{
+					"serial_number": device,
+				})
 				continue
 			}
 
 			r := ResourceVirtualMFADevice()
 			d := r.Data(nil)
 			d.SetId(serialNum)
-			err := sdk.DeleteResource(ctx, r, d, client)
-			if err != nil {
-				sweeperErr := fmt.Errorf("error deleting IAM Virtual MFA Device (%s): %w", device, err)
-				log.Printf("[ERROR] %s", sweeperErr)
-				sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-				continue
-			}
+
+			sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 		}
 		return !lastPage
 	})
 
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM Virtual MFA Device sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-	}
-
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Virtual MFA Devices: %w", err))
-	}
-
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
 
-func sweepSigningCertificates(region string) error {
-	ctx := sweep.Context(region)
-	client, err := sweep.SharedRegionalSweepClient(ctx, region)
-	if err != nil {
-		return fmt.Errorf("error getting client: %w", err)
-	}
+func sweepSigningCertificates(ctx context.Context, client *conns.AWSClient) ([]sweep.Sweepable, error) {
 	conn := client.IAMConn(ctx)
-
-	var sweeperErrs *multierror.Error
 
 	prefixes := []string{
 		"test-user",
@@ -955,9 +836,9 @@ func sweepSigningCertificates(region string) error {
 		"tf_acc",
 	}
 
-	users := make([]*iam.User, 0)
+	var users []*iam.User
 
-	err = conn.ListUsersPagesWithContext(ctx, &iam.ListUsersInput{}, func(page *iam.ListUsersOutput, lastPage bool) bool {
+	err := conn.ListUsersPagesWithContext(ctx, &iam.ListUsersInput{}, func(page *iam.ListUsersOutput, lastPage bool) bool {
 		for _, user := range page.Users {
 			for _, prefix := range prefixes {
 				if strings.HasPrefix(aws.StringValue(user.UserName), prefix) {
@@ -969,19 +850,23 @@ func sweepSigningCertificates(region string) error {
 
 		return !lastPage
 	})
-	if sweep.SkipSweepError(err) {
-		log.Printf("[WARN] Skipping IAM Signing Certificate sweep for %s: %s", region, err)
-		return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
+	if err != nil {
+		return nil, err
 	}
 
-	if err != nil {
-		sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("listing IAM Users: %w", err))
-	}
+	var sweepResources []sweep.Sweepable
 
 	for _, user := range users {
 		out, err := conn.ListSigningCertificatesWithContext(ctx, &iam.ListSigningCertificatesInput{
 			UserName: user.UserName,
 		})
+		if err != nil {
+			tflog.Warn(ctx, "Skipping resource", map[string]any{
+				"error":     err.Error(),
+				"user_name": user.UserName,
+			})
+			continue
+		}
 
 		for _, cert := range out.Certificates {
 			id := fmt.Sprintf("%s:%s", aws.StringValue(cert.CertificateId), aws.StringValue(cert.UserName))
@@ -989,24 +874,10 @@ func sweepSigningCertificates(region string) error {
 			r := ResourceSigningCertificate()
 			d := r.Data(nil)
 			d.SetId(id)
-			err := sdk.DeleteResource(ctx, r, d, client)
 
-			if err != nil {
-				sweeperErr := fmt.Errorf("error deleting IAM Signing Certificate (%s): %w", id, err)
-				log.Printf("[ERROR] %s", sweeperErr)
-				sweeperErrs = multierror.Append(sweeperErrs, sweeperErr)
-				continue
-			}
-		}
-
-		if sweep.SkipSweepError(err) {
-			log.Printf("[WARN] Skipping IAM Signing Certificate sweep for %s: %s", region, err)
-			return sweeperErrs.ErrorOrNil() // In case we have completed some pages, but had errors
-		}
-		if err != nil {
-			sweeperErrs = multierror.Append(sweeperErrs, fmt.Errorf("error describing IAM Signing Certificates: %w", err))
+			sweepResources = append(sweepResources, sdk.NewSweepResource(r, d, client))
 		}
 	}
 
-	return sweeperErrs.ErrorOrNil()
+	return sweepResources, err
 }
