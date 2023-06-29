@@ -164,6 +164,8 @@ github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5Kwzbycv
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
 github.com/fatih/color v1.14.1 h1:qfhVLaG5s+nCROl1zJsZRxFeYrHLqWroPOQ8BWiNb4w=
 github.com/fatih/color v1.14.1/go.mod h1:2oHN61fhTpgcxD3TSWCgKDiH1+x4OiDVVGH8WlgGZGg=
+github.com/gdavison/terraform-plugin-log v0.0.0-20230627175327-30522029d685 h1:eAYrGsNqG1a2HZzgoKgUcJf/VjAW2+Js+HDvwNKITQY=
+github.com/gdavison/terraform-plugin-log v0.0.0-20230627175327-30522029d685/go.mod h1:rKL8egZQ/eXSyDqzLUuwUYLVdlYeamldAHSxjUFADow=
 github.com/go-git/gcfg v1.5.0 h1:Q5ViNfGF8zFgyJWPqYwA7qGFoMTEiBmdlkcfRmpIMa4=
 github.com/go-git/go-billy/v5 v5.4.1 h1:Uwp5tDRkPr+l/TnbHOQzp+tmJfLceOlbVucgpTz8ix4=
 github.com/go-git/go-git/v5 v5.6.1 h1:q4ZRqQl4pR/ZJHc1L5CFjGA1a10u76aV1iC+nh+bHsk=
@@ -230,14 +232,12 @@ github.com/hashicorp/terraform-plugin-framework-validators v0.10.0 h1:4L0tmy/8es
 github.com/hashicorp/terraform-plugin-framework-validators v0.10.0/go.mod h1:qdQJCdimB9JeX2YwOpItEu+IrfoJjWQ5PhLpAOMDQAE=
 github.com/hashicorp/terraform-plugin-go v0.17.0 h1:OpqgPLvjW3vCDA9VUEmRKppCZOG/+Vkdp6ijkG8aJek=
 github.com/hashicorp/terraform-plugin-go v0.17.0/go.mod h1:l7VK+2u5Kf2y+A+742GX0ouLut3gttudmvMgN0PA74Y=
-github.com/hashicorp/terraform-plugin-log v0.9.0 h1:i7hOA+vdAItN1/7UrfBqBwvYPQ9TFvymaRGZED3FCV0=
-github.com/hashicorp/terraform-plugin-log v0.9.0/go.mod h1:rKL8egZQ/eXSyDqzLUuwUYLVdlYeamldAHSxjUFADow=
 github.com/hashicorp/terraform-plugin-mux v0.11.1 h1:cDCrmkrNHf/c2zC1oREIMdgCYWi1QP9U/qNXeNSYoFk=
 github.com/hashicorp/terraform-plugin-mux v0.11.1/go.mod h1:eMZPcv8b5y+alMeQmocgaphPj4zAnM3uXiMLd1emqMQ=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0 h1:I8efBnjuDrgPjNF1MEypHy48VgcTIUY4X6rOFunrR3Y=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0/go.mod h1:cUEP4ly/nxlHy5HzD6YRrHydtlheGvGRJDhiWqqVik4=
-github.com/hashicorp/terraform-plugin-testing v1.3.0 h1:4Pn8fSspPCRUc5zRGPNZYc00VhQmQPEH6y6Pv4e/42M=
-github.com/hashicorp/terraform-plugin-testing v1.3.0/go.mod h1:mGOfGFTVIhP9buGPZyDQhmZFIO/Ig8E0Fo694UACr64=
+github.com/hashicorp/terraform-plugin-testing v1.3.1-0.20230627142044-fd9dc5ec064f h1:5fmpuZi226rceJ0y5l0xNmAhfHX2PnKQdi4WX2uysoY=
+github.com/hashicorp/terraform-plugin-testing v1.3.1-0.20230627142044-fd9dc5ec064f/go.mod h1:ghksKefOgvua85K9Ch5XpkrM9tCbjw+x3ZW4jWmAD/c=
 github.com/hashicorp/terraform-registry-address v0.2.1 h1:QuTf6oJ1+WSflJw6WYOHhLgwUiQ0FrROpHPYFtwTYWM=
 github.com/hashicorp/terraform-registry-address v0.2.1/go.mod h1:BSE9fIFzp0qWsJUUyGquo4ldV9k2n+psif6NYkBRS3Y=
 github.com/hashicorp/terraform-svchost v0.1.1 h1:EZZimZ1GxdqFRinZ1tpJwVxxt49xc/S52uzrw4x0jKQ=

@@ -104,6 +104,10 @@ type Sweepable interface {
 }
 
 func SweepOrchestratorWithContext(ctx context.Context, sweepables []Sweepable, optFns ...tfresource.OptionsFunc) error {
+	if len(sweepables) == 0 {
+		tflog.Info(ctx, "No resources to sweep")
+	}
+
 	var g multierror.Group
 
 	for _, sweepable := range sweepables {
@@ -214,7 +218,6 @@ func Register(name string, f SweeperFn, dependencies ...string) {
 		Name: name,
 		F: func(region string) error {
 			ctx := Context(region)
-			ctx = tflog.SetField(ctx, "region", region)
 			ctx = tflog.SetField(ctx, "sweeper_name", name)
 
 			client, err := SharedRegionalSweepClient(ctx, region)
