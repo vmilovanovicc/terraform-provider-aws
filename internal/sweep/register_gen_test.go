@@ -147,7 +147,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/service/workspaces"
 )
 
-func registerSweepers(context.Context) {
+func registerSweepers() {
 	accessanalyzer.RegisterSweepers()
 	acm.RegisterSweepers()
 	acmpca.RegisterSweepers()

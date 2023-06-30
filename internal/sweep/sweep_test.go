@@ -13,7 +13,7 @@ func TestMain(m *testing.M) {
 
 	sweep.ServicePackages = servicePackages(ctx)
 
-	registerSweepers(ctx)
+	registerSweepers()
 
 	resource.TestMain(m)
 }

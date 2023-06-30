@@ -10,7 +10,7 @@ import (
 {{- end }}
 )
 
-func registerSweepers(context.Context) {
+func registerSweepers() {
 {{- range .Services }}
 	{{ .ProviderPackage }}.RegisterSweepers()
 {{- end }}
