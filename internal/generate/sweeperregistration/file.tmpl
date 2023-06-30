@@ -3,8 +3,6 @@
 package {{ .PackageName }}
 
 import (
-	"context"
-
 {{ range .Services }}
 	"github.com/hashicorp/terraform-provider-aws/internal/service/{{ .ProviderPackage }}"
 {{- end }}
