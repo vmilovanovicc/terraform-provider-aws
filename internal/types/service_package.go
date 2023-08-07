@@ -21,7 +21,8 @@ type UpdateTagsFunc func(context.Context, string, any, any) error
 // ServicePackageResourceTags represents resource-level tagging information.
 type ServicePackageResourceTags struct {
 	IdentifierAttribute string // The attribute for the identifier for UpdateTags etc.
-	ResourceType        string // Extra resourceType parameter value for UpdateTags etc.
+	ListTags            ListTagsFunc
+	UpdateTags          UpdateTagsFunc
 }
 
 // ServicePackageFrameworkDataSource represents a Terraform Plugin Framework data source
