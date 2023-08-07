@@ -11,6 +11,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// ListTagsFunc represents a resource's tag listing functionality.
+// On success (err == nil), tags are set in Context.
+type ListTagsFunc func(context.Context, string) error
+
+// UpdateTagsFunc represents a resource's tag updating functionality.
+type UpdateTagsFunc func(context.Context, string, any, any) error
+
 // ServicePackageResourceTags represents resource-level tagging information.
 type ServicePackageResourceTags struct {
 	IdentifierAttribute string // The attribute for the identifier for UpdateTags etc.
