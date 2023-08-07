@@ -56,6 +56,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Certificate",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "certificate_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -64,6 +66,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Endpoint",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "endpoint_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -72,6 +76,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Event Subscription",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -80,6 +86,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Replication Instance",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "replication_instance_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -88,6 +96,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Replication Subnet Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "replication_subnet_group_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -96,6 +106,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Replication Task",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "replication_task_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -104,6 +116,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "S3 Endpoint",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "endpoint_arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

@@ -12,6 +12,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
 // listTags lists inspector service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
 // it may also be a different identifier depending on the service.
@@ -29,9 +35,9 @@ func listTags(ctx context.Context, conn inspectoriface.InspectorAPI, identifier 
 	return KeyValueTags(ctx, output.Tags), nil
 }
 
-// ListTags lists inspector service tags and set them in Context.
+// listTags_ lists inspector service tags and set them in Context.
 // It is called from outside this package.
-func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier string) error {
+var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier string) error {
 	tags, err := listTags(ctx, meta.(*conns.AWSClient).InspectorConn(ctx), identifier)
 
 	if err != nil {
@@ -92,3 +98,5 @@ func setTagsOut(ctx context.Context, tags []*inspector.Tag) {
 		inContext.TagsOut = types.Some(KeyValueTags(ctx, tags))
 	}
 }
+
+var updateTags_ updateTags_Func

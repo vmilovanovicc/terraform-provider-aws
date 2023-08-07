@@ -44,6 +44,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Cluster",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -52,6 +54,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Cluster Endpoint",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -60,6 +64,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Cluster",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -68,6 +74,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Cluster Parameter Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -80,6 +88,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Event Subscription",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -92,6 +102,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Parameter Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -100,6 +112,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Subnet Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

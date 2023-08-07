@@ -34,6 +34,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Profile",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -42,6 +44,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Trust Anchor",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

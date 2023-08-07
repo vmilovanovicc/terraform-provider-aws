@@ -12,6 +12,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
 // listLogGroupTags lists logs service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
 // it may also be a different identifier depending on the service.
@@ -27,6 +33,22 @@ func listLogGroupTags(ctx context.Context, conn cloudwatchlogsiface.CloudWatchLo
 	}
 
 	return KeyValueTags(ctx, output.Tags), nil
+}
+
+// listLogGroupTags_ lists logs service tags and set them in Context.
+// It is called from outside this package.
+var listLogGroupTags_ listTags_Func = func(ctx context.Context, meta any, identifier string) error {
+	tags, err := listLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier)
+
+	if err != nil {
+		return err
+	}
+
+	if inContext, ok := tftags.FromContext(ctx); ok {
+		inContext.TagsOut = types.Some(tags)
+	}
+
+	return nil
 }
 
 // updateLogGroupTags updates logs service tags.
@@ -67,4 +89,10 @@ func updateLogGroupTags(ctx context.Context, conn cloudwatchlogsiface.CloudWatch
 	}
 
 	return nil
+}
+
+// updateLogGroupTags_ updates logs service tags.
+// It is called from outside this package.
+var updateLogGroupTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+	return updateLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier, oldTags, newTags)
 }

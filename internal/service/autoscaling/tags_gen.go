@@ -16,6 +16,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, string, any, any) error
+
 // GetTag fetches an individual autoscaling service tag for a resource.
 // Returns whether the key value and any errors. A NotFoundError is used to signal that no value was found.
 // This function will optimise the handling over listTags, if possible.
@@ -72,9 +78,9 @@ func listTags(ctx context.Context, conn autoscalingiface.AutoScalingAPI, identif
 	return KeyValueTags(ctx, output.Tags, identifier, resourceType), nil
 }
 
-// ListTags lists autoscaling service tags and set them in Context.
+// listTags_ lists autoscaling service tags and set them in Context.
 // It is called from outside this package.
-func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier, resourceType string) error {
+var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier, resourceType string) error {
 	tags, err := listTags(ctx, meta.(*conns.AWSClient).AutoScalingConn(ctx), identifier, resourceType)
 
 	if err != nil {
@@ -276,8 +282,8 @@ func updateTags(ctx context.Context, conn autoscalingiface.AutoScalingAPI, ident
 	return nil
 }
 
-// UpdateTags updates autoscaling service tags.
+// updateTags_ updates autoscaling service tags.
 // It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier, resourceType string, oldTags, newTags any) error {
+var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier, resourceType string, oldTags, newTags any) error {
 	return updateTags(ctx, meta.(*conns.AWSClient).AutoScalingConn(ctx), identifier, resourceType, oldTags, newTags)
 }

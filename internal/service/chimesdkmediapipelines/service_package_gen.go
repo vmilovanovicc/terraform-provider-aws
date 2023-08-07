@@ -35,6 +35,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Media Insights Pipeline Configuration",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

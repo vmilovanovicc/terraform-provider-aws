@@ -58,7 +58,10 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourcePermissionSet,
 			TypeName: "aws_ssoadmin_permission_set",
 			Name:     "Permission Set",
-			Tags:     &types.ServicePackageResourceTags{},
+			Tags: &types.ServicePackageResourceTags{
+				ListTags:   listTags_,
+				UpdateTags: updateTags_,
+			},
 		},
 		{
 			Factory:  ResourcePermissionSetInlinePolicy,

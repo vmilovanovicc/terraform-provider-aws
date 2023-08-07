@@ -35,6 +35,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Aggregate Authorization",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -43,6 +45,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Config Rule",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -51,6 +55,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Configuration Aggregator",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{

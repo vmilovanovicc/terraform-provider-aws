@@ -14,6 +14,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
+var listTags_ listTags_Func
+
 // []*SERVICE.Tag handling
 
 // Tags returns licensemanager service tags.
@@ -102,8 +110,8 @@ func updateTags(ctx context.Context, conn licensemanageriface.LicenseManagerAPI,
 	return nil
 }
 
-// UpdateTags updates licensemanager service tags.
+// updateTags_ updates licensemanager service tags.
 // It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
 	return updateTags(ctx, meta.(*conns.AWSClient).LicenseManagerConn(ctx), identifier, oldTags, newTags)
 }

@@ -54,6 +54,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Destination",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -64,7 +66,10 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  resourceGroup,
 			TypeName: "aws_cloudwatch_log_group",
 			Name:     "Log Group",
-			Tags:     &types.ServicePackageResourceTags{},
+			Tags: &types.ServicePackageResourceTags{
+				ListTags:   listTags_,
+				UpdateTags: updateTags_,
+			},
 		},
 		{
 			Factory:  resourceMetricFilter,

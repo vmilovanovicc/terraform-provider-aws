@@ -25,6 +25,8 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 			Name:    "Index",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -32,6 +34,8 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 			Name:    "View",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

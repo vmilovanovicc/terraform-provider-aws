@@ -40,6 +40,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Delivery Stream",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "name",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 	}

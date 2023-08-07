@@ -10,6 +10,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
+var listTags_ listTags_Func
+
 // []*SERVICE.Tag handling
 
 // Tags returns servicecatalog service tags.
@@ -57,3 +65,5 @@ func setTagsOut(ctx context.Context, tags []*servicecatalog.Tag) {
 		inContext.TagsOut = types.Some(KeyValueTags(ctx, tags))
 	}
 }
+
+var updateTags_ updateTags_Func

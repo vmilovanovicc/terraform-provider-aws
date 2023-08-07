@@ -68,6 +68,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Load Balancer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -76,6 +78,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Listener",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -88,6 +92,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Listener Rule",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -96,6 +102,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Target Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -108,6 +116,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Load Balancer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -116,6 +126,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Listener",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -128,6 +140,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Listener Rule",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{
@@ -136,6 +150,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Target Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
+				ListTags:            listTags_,
+				UpdateTags:          updateTags_,
 			},
 		},
 		{

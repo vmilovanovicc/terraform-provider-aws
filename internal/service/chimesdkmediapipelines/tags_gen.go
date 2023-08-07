@@ -14,6 +14,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
 // listTags lists chimesdkmediapipelines service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
 // it may also be a different identifier depending on the service.
@@ -31,9 +37,9 @@ func listTags(ctx context.Context, conn chimesdkmediapipelinesiface.ChimeSDKMedi
 	return KeyValueTags(ctx, output.Tags), nil
 }
 
-// ListTags lists chimesdkmediapipelines service tags and set them in Context.
+// listTags_ lists chimesdkmediapipelines service tags and set them in Context.
 // It is called from outside this package.
-func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier string) error {
+var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier string) error {
 	tags, err := listTags(ctx, meta.(*conns.AWSClient).ChimeSDKMediaPipelinesConn(ctx), identifier)
 
 	if err != nil {
@@ -135,8 +141,8 @@ func updateTags(ctx context.Context, conn chimesdkmediapipelinesiface.ChimeSDKMe
 	return nil
 }
 
-// UpdateTags updates chimesdkmediapipelines service tags.
+// updateTags_ updates chimesdkmediapipelines service tags.
 // It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
 	return updateTags(ctx, meta.(*conns.AWSClient).ChimeSDKMediaPipelinesConn(ctx), identifier, oldTags, newTags)
 }

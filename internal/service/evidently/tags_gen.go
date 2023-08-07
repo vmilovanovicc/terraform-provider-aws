@@ -14,6 +14,14 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
+var listTags_ listTags_Func
+
 // map[string]*string handling
 
 // Tags returns evidently service tags.
@@ -85,8 +93,8 @@ func updateTags(ctx context.Context, conn cloudwatchevidentlyiface.CloudWatchEvi
 	return nil
 }
 
-// UpdateTags updates evidently service tags.
+// updateTags_ updates evidently service tags.
 // It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
 	return updateTags(ctx, meta.(*conns.AWSClient).EvidentlyConn(ctx), identifier, oldTags, newTags)
 }

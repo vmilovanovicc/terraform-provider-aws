@@ -17,6 +17,12 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
 // GetTag fetches an individual ecs service tag for a resource.
 // Returns whether the key value and any errors. A NotFoundError is used to signal that no value was found.
 // This function will optimise the handling over listTags, if possible.
@@ -60,9 +66,9 @@ func listTags(ctx context.Context, conn ecsiface.ECSAPI, identifier string) (tft
 	return KeyValueTags(ctx, output.Tags), nil
 }
 
-// ListTags lists ecs service tags and set them in Context.
+// listTags_ lists ecs service tags and set them in Context.
 // It is called from outside this package.
-func (p *servicePackage) ListTags(ctx context.Context, meta any, identifier string) error {
+var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier string) error {
 	tags, err := listTags(ctx, meta.(*conns.AWSClient).ECSConn(ctx), identifier)
 
 	if err != nil {
@@ -173,8 +179,8 @@ func updateTags(ctx context.Context, conn ecsiface.ECSAPI, identifier string, ol
 	return nil
 }
 
-// UpdateTags updates ecs service tags.
+// updateTags_ updates ecs service tags.
 // It is called from outside this package.
-func (p *servicePackage) UpdateTags(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
 	return updateTags(ctx, meta.(*conns.AWSClient).ECSConn(ctx), identifier, oldTags, newTags)
 }

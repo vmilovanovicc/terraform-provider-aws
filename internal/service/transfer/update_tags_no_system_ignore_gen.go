@@ -11,6 +11,14 @@ import (
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 )
 
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string, any, any) error
+
+var listTags_ listTags_Func
+
 // updateTagsNoIgnoreSystem updates transfer service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
 // it may also be a different identifier depending on the service.
@@ -47,4 +55,10 @@ func updateTagsNoIgnoreSystem(ctx context.Context, conn transferiface.TransferAP
 	}
 
 	return nil
+}
+
+// updateTagsNoIgnoreSystem_ updates transfer service tags.
+// It is called from outside this package.
+var updateTagsNoIgnoreSystem_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+	return updateTagsNoIgnoreSystem(ctx, meta.(*conns.AWSClient).TransferConn(ctx), identifier, oldTags, newTags)
 }
