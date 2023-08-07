@@ -128,6 +128,8 @@ type ResourceDatum struct {
 	TransparentTagging      bool
 	TagsIdentifierAttribute string
 	TagsResourceType        string
+	TagsListFunc            string
+	TagsUpdateFunc          string
 }
 
 type ServiceDatum struct {
@@ -226,6 +228,18 @@ func (v *visitor) processFuncDecl(funcDecl *ast.FuncDecl) {
 
 			if attr, ok := args.Keyword["resourceType"]; ok {
 				d.TagsResourceType = attr
+			}
+
+			if attr, ok := args.Keyword["listTags"]; ok {
+				d.TagsListFunc = attr
+			} else {
+				d.TagsListFunc = "listTags_"
+			}
+
+			if attr, ok := args.Keyword["updateTags"]; ok {
+				d.TagsUpdateFunc = attr
+			} else {
+				d.TagsUpdateFunc = "updateTags_"
 			}
 		}
 	}
