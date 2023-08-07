@@ -142,7 +142,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 					}
 
 					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return {{ .TagsUpdateFunc }}(ctx, meta identifier, "{{ .TagsResourceType }}", oldTags, newTags)
+						return {{ .TagsUpdateFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}", oldTags, newTags)
 					}
 				} (),
 				{{- end }}
