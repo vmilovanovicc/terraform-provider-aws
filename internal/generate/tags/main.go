@@ -372,6 +372,10 @@ func main() {
 		if err := d.WriteTemplate("listtags", templateBody.listTags, templateData); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
+	} else {
+		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ listTags_Func\n", defaultListTagsFunc))); err != nil {
+			g.Fatalf("generating file (%s): %s", filename, err)
+		}
 	}
 
 	if *serviceTagsMap {
@@ -388,6 +392,10 @@ func main() {
 
 	if *updateTags {
 		if err := d.WriteTemplate("updatetags", templateBody.updateTags, templateData); err != nil {
+			g.Fatalf("generating file (%s): %s", filename, err)
+		}
+	} else {
+		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ updateTags_Func\n", defaultUpdateTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	}

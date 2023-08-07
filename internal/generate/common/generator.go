@@ -97,8 +97,7 @@ func (d *fileDestination) WriteTemplate(templateName, templateBody string, templ
 		return fmt.Errorf("formatting parsed template:\n%s\n%w", unformattedBody, err)
 	}
 
-	_, err = d.buffer.Write(body)
-	return err
+	return d.WriteBytes(body)
 }
 
 func parseTemplate(templateName, templateBody string, templateData any) ([]byte, error) {
