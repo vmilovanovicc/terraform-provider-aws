@@ -43,3 +43,9 @@ import (
     "github.com/hashicorp/terraform-provider-aws/names"
 	{{- end }}
 )
+
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, string{{ if .TagResTypeElem }}, string{{ end }}) error
+
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, string{{ if .TagResTypeElem }}, string{{ end }}, any, any) error
