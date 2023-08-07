@@ -110,41 +110,35 @@ type TemplateBody struct {
 }
 
 func newTemplateBody(version int, kvtValues bool) *TemplateBody {
+	var templateBody *TemplateBody
+
 	switch version {
 	case sdkV1:
-		return &TemplateBody{
-			"\n" + v1.GetTagBody,
-			v1.HeaderBody,
-			"\n" + v1.ListTagsBody,
-			"\n" + v1.ServiceTagsMapBody,
-			"\n" + v1.ServiceTagsSliceBody,
-			"\n" + v1.UpdateTagsBody,
-			"\n" + v1.WaitTagsPropagatedBody,
+		templateBody = &TemplateBody{
+			getTag:             "\n" + v1.GetTagBody,
+			header:             v1.HeaderBody,
+			listTags:           "\n" + v1.ListTagsBody,
+			serviceTagsMap:     "\n" + v1.ServiceTagsMapBody,
+			serviceTagsSlice:   "\n" + v1.ServiceTagsSliceBody,
+			updateTags:         "\n" + v1.UpdateTagsBody,
+			waitTagsPropagated: "\n" + v1.WaitTagsPropagatedBody,
 		}
 	case sdkV2:
+		templateBody = &TemplateBody{
+			getTag:             "\n" + v2.GetTagBody,
+			header:             v2.HeaderBody,
+			listTags:           "\n" + v2.ListTagsBody,
+			serviceTagsMap:     "\n" + v2.ServiceTagsMapBody,
+			serviceTagsSlice:   "\n" + v2.ServiceTagsSliceBody,
+			updateTags:         "\n" + v2.UpdateTagsBody,
+			waitTagsPropagated: "\n" + v2.WaitTagsPropagatedBody,
+		}
 		if kvtValues {
-			return &TemplateBody{
-				"\n" + v2.GetTagBody,
-				v2.HeaderBody,
-				"\n" + v2.ListTagsBody,
-				"\n" + v2.ServiceTagsValueMapBody,
-				"\n" + v2.ServiceTagsSliceBody,
-				"\n" + v2.UpdateTagsBody,
-				"\n" + v2.WaitTagsPropagatedBody,
-			}
+			templateBody.serviceTagsMap = "\n" + v2.ServiceTagsValueMapBody
 		}
-		return &TemplateBody{
-			"\n" + v2.GetTagBody,
-			v2.HeaderBody,
-			"\n" + v2.ListTagsBody,
-			"\n" + v2.ServiceTagsMapBody,
-			"\n" + v2.ServiceTagsSliceBody,
-			"\n" + v2.UpdateTagsBody,
-			"\n" + v2.WaitTagsPropagatedBody,
-		}
-	default:
-		return nil
 	}
+
+	return templateBody
 }
 
 type TemplateData struct {
@@ -355,7 +349,7 @@ func main() {
 	templateBody := newTemplateBody(*sdkVersion, *kvtValues)
 	d := g.NewGoFileDestination(filename)
 
-	if *getTag || *listTags || *serviceTagsMap || *serviceTagsSlice || *updateTags {
+	if *getTag || *listTags || *serviceTagsMap || *serviceTagsSlice || *updateTags || *waitForPropagation {
 		// If you intend to only generate Tags and KeyValueTags helper methods,
 		// the corresponding aws-sdk-go	service package does not need to be imported
 		if !*getTag && !*listTags && !*serviceTagsSlice && !*updateTags {
