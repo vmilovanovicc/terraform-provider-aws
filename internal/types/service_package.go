@@ -13,10 +13,10 @@ import (
 
 // ListTagsFunc represents a resource's tag listing functionality.
 // On success (err == nil), tags are set in Context.
-type ListTagsFunc func(context.Context, string) error
+type ListTagsFunc func(context.Context, any, string) error
 
 // UpdateTagsFunc represents a resource's tag updating functionality.
-type UpdateTagsFunc func(context.Context, string, any, any) error
+type UpdateTagsFunc func(context.Context, any, string, any, any) error
 
 // ServicePackageResourceTags represents resource-level tagging information.
 type ServicePackageResourceTags struct {

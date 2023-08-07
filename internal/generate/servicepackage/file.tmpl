@@ -67,8 +67,8 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return {{ .TagsListFunc }}(ctx, identifier, "{{ .TagsResourceType }}")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return {{ .TagsListFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}")
 					}
 				} (),
 				UpdateTags: func() UpdateTagsFunc {
@@ -76,8 +76,8 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return {{ .TagsUpdateFunc }}(ctx, identifier, "{{ .TagsResourceType }}", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return {{ .TagsUpdateFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}", oldTags, newTags)
 					}
 				} (),
 				{{- end }}
@@ -132,8 +132,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return {{ .TagsListFunc }}(ctx, identifier, "{{ .TagsResourceType }}")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return {{ .TagsListFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}")
 					}
 				} (),
 				UpdateTags: func() UpdateTagsFunc {
@@ -141,8 +141,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return {{ .TagsUpdateFunc }}(ctx, identifier, "{{ .TagsResourceType }}", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return {{ .TagsUpdateFunc }}(ctx, meta identifier, "{{ .TagsResourceType }}", oldTags, newTags)
 					}
 				} (),
 				{{- end }}
