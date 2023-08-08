@@ -8,17 +8,10 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ssoadmin"
 	"github.com/aws/aws-sdk-go/service/ssoadmin/ssoadminiface"
-	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
-
-// listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, any, string, string) error
-
-// updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, any, string, string, any, any) error
 
 // listTags lists ssoadmin service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
@@ -36,22 +29,6 @@ func listTags(ctx context.Context, conn ssoadminiface.SSOAdminAPI, identifier, r
 	}
 
 	return KeyValueTags(ctx, output.Tags), nil
-}
-
-// listTags_ lists ssoadmin service tags and set them in Context.
-// It is called from outside this package.
-var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier, resourceType string) error {
-	tags, err := listTags(ctx, meta.(*conns.AWSClient).SSOAdminConn(ctx), identifier, resourceType)
-
-	if err != nil {
-		return err
-	}
-
-	if inContext, ok := tftags.FromContext(ctx); ok {
-		inContext.TagsOut = types.Some(tags)
-	}
-
-	return nil
 }
 
 // []*SERVICE.Tag handling
@@ -142,10 +119,4 @@ func updateTags(ctx context.Context, conn ssoadminiface.SSOAdminAPI, identifier,
 	}
 
 	return nil
-}
-
-// updateTags_ updates ssoadmin service tags.
-// It is called from outside this package.
-var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier, resourceType string, oldTags, newTags any) error {
-	return updateTags(ctx, meta.(*conns.AWSClient).SSOAdminConn(ctx), identifier, resourceType, oldTags, newTags)
 }
