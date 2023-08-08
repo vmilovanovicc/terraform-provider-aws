@@ -59,10 +59,10 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 				IdentifierAttribute: "{{ .TagsIdentifierAttribute }}",
 				{{- end }}
 				{{- if eq .TagsResourceType "" }}
-				ListTags:   {{ .TagsListFunc }},
-				UpdateTags: {{ .TagsUpdateFunc }},
+				ListTags:   types.ListTagsFunc({{ .TagsListFunc }}),
+				UpdateTags: types.UpdateTagsFunc({{ .TagsUpdateFunc }}),
 				{{- else }}
-				ListTags:   func() ListTagsFunc {
+				ListTags:   func() types.ListTagsFunc {
 					if {{ .TagsListFunc }} == nil {
 						return nil
 					}
@@ -71,7 +71,7 @@ func (p *servicePackage) FrameworkResources(ctx context.Context) []*types.Servic
 						return {{ .TagsListFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}")
 					}
 				} (),
-				UpdateTags: func() UpdateTagsFunc {
+				UpdateTags: func() types.UpdateTagsFunc {
 					if {{ .TagsUpdateFunc }} == nil {
 						return nil
 					}
@@ -124,10 +124,10 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 				IdentifierAttribute: "{{ $value.TagsIdentifierAttribute }}",
 				{{- end }}
 				{{- if eq .TagsResourceType "" }}
-				ListTags:   {{ .TagsListFunc }},
-				UpdateTags: {{ .TagsUpdateFunc }},
+				ListTags:   types.ListTagsFunc({{ .TagsListFunc }}),
+				UpdateTags: types.UpdateTagsFunc({{ .TagsUpdateFunc }}),
 				{{- else }}
-				ListTags:   func() ListTagsFunc {
+				ListTags:   func() types.ListTagsFunc {
 					if {{ .TagsListFunc }} == nil {
 						return nil
 					}
@@ -136,7 +136,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return {{ .TagsListFunc }}(ctx, meta, identifier, "{{ .TagsResourceType }}")
 					}
 				} (),
-				UpdateTags: func() UpdateTagsFunc {
+				UpdateTags: func() types.UpdateTagsFunc {
 					if {{ .TagsUpdateFunc }} == nil {
 						return nil
 					}
