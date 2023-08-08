@@ -61,8 +61,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_ssm_activation",
 			Name:     "Activation",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
+				ListTags:   types.ListTagsFunc(nil),
+				UpdateTags: types.UpdateTagsFunc(nil),
 			},
 		},
 		{
