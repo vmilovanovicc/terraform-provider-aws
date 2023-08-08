@@ -17,10 +17,10 @@ import (
 )
 
 // listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, string, string) error
+type listTags_Func func(context.Context, any, string, string) error
 
 // updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, string, string, any, any) error
+type updateTags_Func func(context.Context, any, string, string, any, any) error
 
 // GetTag fetches an individual autoscaling service tag for a resource.
 // Returns whether the key value and any errors. A NotFoundError is used to signal that no value was found.

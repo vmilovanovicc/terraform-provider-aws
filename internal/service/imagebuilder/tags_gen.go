@@ -15,10 +15,10 @@ import (
 )
 
 // listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, string) error
+type listTags_Func func(context.Context, any, string) error
 
 // updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, string, any, any) error
+type updateTags_Func func(context.Context, any, string, any, any) error
 
 // listTags lists imagebuilder service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although

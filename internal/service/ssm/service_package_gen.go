@@ -84,8 +84,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "Document")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "Document")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -93,8 +93,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "Document", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "Document", oldTags, newTags)
 					}
 				}(),
 			},
@@ -110,8 +110,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "MaintenanceWindow")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "MaintenanceWindow")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -119,8 +119,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "MaintenanceWindow", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "MaintenanceWindow", oldTags, newTags)
 					}
 				}(),
 			},
@@ -144,8 +144,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "Parameter")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "Parameter")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -153,8 +153,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "Parameter", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "Parameter", oldTags, newTags)
 					}
 				}(),
 			},
@@ -170,8 +170,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "PatchBaseline")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "PatchBaseline")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -179,8 +179,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "PatchBaseline", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "PatchBaseline", oldTags, newTags)
 					}
 				}(),
 			},

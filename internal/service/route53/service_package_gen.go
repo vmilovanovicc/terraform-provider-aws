@@ -61,8 +61,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "healthcheck")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "healthcheck")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -70,8 +70,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "healthcheck", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "healthcheck", oldTags, newTags)
 					}
 				}(),
 			},
@@ -115,8 +115,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string) error {
-						return listTags_(ctx, identifier, "hostedzone")
+					return func(ctx context.Context, meta any, identifier string) error {
+						return listTags_(ctx, meta, identifier, "hostedzone")
 					}
 				}(),
 				UpdateTags: func() UpdateTagsFunc {
@@ -124,8 +124,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 						return nil
 					}
 
-					return func(ctx context.Context, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, identifier, "hostedzone", oldTags, newTags)
+					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+						return updateTags_(ctx, meta, identifier, "hostedzone", oldTags, newTags)
 					}
 				}(),
 			},
