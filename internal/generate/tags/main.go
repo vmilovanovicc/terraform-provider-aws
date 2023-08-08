@@ -84,12 +84,17 @@ var (
 	parentNotFoundErrCode = flag.String("ParentNotFoundErrCode", "", "Parent 'NotFound' Error Code")
 	parentNotFoundErrMsg  = flag.String("ParentNotFoundErrMsg", "", "Parent 'NotFound' Error Message")
 
+	kvtValues = flag.Bool("KVTValues", false, "Whether KVT string map is of string pointers")
+
 	sdkServicePackage = flag.String("AWSSDKServicePackage", "", "AWS Go SDK package to use. Defaults to the provider service package name.")
 	sdkVersion        = flag.Int("AWSSDKVersion", sdkV1, "Version of the AWS SDK Go to use i.e. 1 or 2")
-	kvtValues         = flag.Bool("KVTValues", false, "Whether KVT string map is of string pointers")
-	skipServiceImp    = flag.Bool("SkipAWSServiceImp", false, "Whether to skip importing the AWS service package")
-	skipNamesImp      = flag.Bool("SkipNamesImp", false, "Whether to skip importing names")
-	skipTypesImp      = flag.Bool("SkipTypesImp", false, "Whether to skip importing types")
+
+	skipInterceptorListTagsFunc   = flag.Bool("SkipInterceptorListTagsFunc", false, "Whether to skip generating the transparent tagging interceptor ListTagsFunc")
+	skipInterceptorUpdateTagsFunc = flag.Bool("SkipInterceptorUpdateTagsFunc", false, "Whether to skip generating the transparent tagging interceptor UpdateTagsFunc")
+
+	skipNamesImp   = flag.Bool("SkipNamesImp", false, "Whether to skip importing names")
+	skipServiceImp = flag.Bool("SkipAWSServiceImp", false, "Whether to skip importing the AWS service package")
+	skipTypesImp   = flag.Bool("SkipTypesImp", false, "Whether to skip importing types")
 )
 
 func usage() {
@@ -209,6 +214,9 @@ type TemplateData struct {
 
 	IsDefaultListTags   bool
 	IsDefaultUpdateTags bool
+
+	SkipInterceptorListTagsFunc   bool
+	SkipInterceptorUpdateTagsFunc bool
 }
 
 func main() {
@@ -286,10 +294,10 @@ func main() {
 		ProviderNameUpper:      providerNameUpper,
 		ServicePackage:         servicePackage,
 
-		ConnsPkg:         (*listTags && *listTagsFunc == defaultListTagsFunc) || (*updateTags && *updateTagsFunc == defaultUpdateTagsFunc),
+		ConnsPkg:         (*listTags && !*skipInterceptorListTagsFunc) || (*updateTags && !*skipInterceptorUpdateTagsFunc),
 		FmtPkg:           *updateTags,
 		HelperSchemaPkg:  awsPkg == "autoscaling",
-		InternalTypesPkg: (*listTags && *listTagsFunc == defaultListTagsFunc) || *serviceTagsMap || *serviceTagsSlice,
+		InternalTypesPkg: (*listTags && !*skipInterceptorListTagsFunc) || *serviceTagsMap || *serviceTagsSlice,
 		NamesPkg:         *updateTags && !*skipNamesImp,
 		SkipServiceImp:   *skipServiceImp,
 		SkipTypesImp:     *skipTypesImp,
@@ -344,6 +352,9 @@ func main() {
 
 		IsDefaultListTags:   *listTagsFunc == defaultListTagsFunc,
 		IsDefaultUpdateTags: *updateTagsFunc == defaultUpdateTagsFunc,
+
+		SkipInterceptorListTagsFunc:   *skipInterceptorListTagsFunc,
+		SkipInterceptorUpdateTagsFunc: *skipInterceptorUpdateTagsFunc,
 	}
 
 	templateBody := newTemplateBody(*sdkVersion, *kvtValues)
@@ -372,7 +383,7 @@ func main() {
 		if err := d.WriteTemplate("listtags", templateBody.listTags, templateData); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
-	} else {
+	} else if !*skipInterceptorListTagsFunc {
 		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ listTags_Func\n", defaultListTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
@@ -394,7 +405,7 @@ func main() {
 		if err := d.WriteTemplate("updatetags", templateBody.updateTags, templateData); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
-	} else {
+	} else if !*skipInterceptorUpdateTagsFunc {
 		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ updateTags_Func\n", defaultUpdateTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}

@@ -47,6 +47,7 @@ func {{ .ListTagsFunc }}(ctx context.Context, conn {{ .ClientType }}, identifier
 	return {{ .KeyValueTagsFunc }}(ctx, output.{{ .ListTagsOutTagsElem }}{{ if .TagTypeIDElem }}, identifier{{ if .TagResTypeElem }}, resourceType{{ end }}{{ end }}), nil
 }
 
+{{- if not .SkipInterceptorListTagsFunc }}
 // {{ .ListTagsFunc }}_ lists {{ .ServicePackage }} service tags and set them in Context.
 // It is called from outside this package.
 var {{ .ListTagsFunc }}_ listTags_Func = func(ctx context.Context, meta any, identifier{{ if .TagResTypeElem }}, resourceType{{ end }} string) error {
@@ -62,3 +63,4 @@ var {{ .ListTagsFunc }}_ listTags_Func = func(ctx context.Context, meta any, ide
 
 	return nil
 }
+{{- end }}
