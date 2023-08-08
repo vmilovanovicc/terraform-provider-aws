@@ -54,8 +54,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Destination",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -67,8 +67,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_cloudwatch_log_group",
 			Name:     "Log Group",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{

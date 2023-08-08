@@ -131,8 +131,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_instance_profile",
 			Name:     "Instance Profile",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -140,8 +140,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_openid_connect_provider",
 			Name:     "OIDC Provider",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -149,8 +149,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_policy",
 			Name:     "Policy",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -162,8 +162,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_role",
 			Name:     "Role",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -179,8 +179,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_saml_provider",
 			Name:     "SAML Provider",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -193,8 +193,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_server_certificate",
 			Name:     "Server Certificate",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -202,8 +202,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_service_linked_role",
 			Name:     "Service Linked Role",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -219,8 +219,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_user",
 			Name:     "User",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -248,8 +248,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_virtual_mfa_device",
 			Name:     "Virtual MFA Device",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 	}

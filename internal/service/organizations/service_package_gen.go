@@ -76,8 +76,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Account",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -94,8 +94,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Organizational Unit",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -104,8 +104,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Policy",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -118,8 +118,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Resource Policy",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 	}

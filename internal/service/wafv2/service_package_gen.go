@@ -52,8 +52,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "IP Set",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -62,8 +62,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Regex Pattern Set",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -72,8 +72,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Rule Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -82,8 +82,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Web ACL",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{

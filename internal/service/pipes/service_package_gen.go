@@ -34,8 +34,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Pipe",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            listTags_,
-				UpdateTags:          updateTags_,
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
 		},
 	}

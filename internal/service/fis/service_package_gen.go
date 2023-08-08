@@ -33,8 +33,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_fis_experiment_template",
 			Name:     "Experiment Template",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 	}

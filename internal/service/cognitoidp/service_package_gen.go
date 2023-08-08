@@ -82,8 +82,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_cognito_user_pool",
 			Name:     "User Pool",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{

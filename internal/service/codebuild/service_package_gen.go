@@ -34,8 +34,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_codebuild_project",
 			Name:     "Project",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
@@ -43,8 +43,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_codebuild_report_group",
 			Name:     "Report Group",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   listTags_,
-				UpdateTags: updateTags_,
+				ListTags:   types.ListTagsFunc(listTags_),
+				UpdateTags: types.UpdateTagsFunc(updateTags_),
 			},
 		},
 		{
