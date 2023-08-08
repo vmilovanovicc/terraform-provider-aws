@@ -8,15 +8,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs/cloudwatchlogsiface"
+	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/types"
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
-
-// listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, any, string) error
-
-// updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, any, string, any, any) error
 
 // listLogGroupTags lists logs service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
