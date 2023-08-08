@@ -67,8 +67,9 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_cloudwatch_log_group",
 			Name:     "Log Group",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
+				IdentifierAttribute: "id",
+				ListTags:            types.ListTagsFunc(listLogGroupTags_),
+				UpdateTags:          types.UpdateTagsFunc(updateLogGroupTags_),
 			},
 		},
 		{

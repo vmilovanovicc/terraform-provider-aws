@@ -22,7 +22,7 @@ import (
 )
 
 // @SDKResource("aws_cloudwatch_log_group", name="Log Group")
-// @Tags
+// @Tags(identifierAttribute="id", listTags=listLogGroupTags_, updateTags=updateLogGroupTags_)
 func resourceGroup() *schema.Resource {
 	return &schema.Resource{
 		CreateWithoutTimeout: resourceGroupCreate,
@@ -138,14 +138,6 @@ func resourceGroupRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	d.Set("name_prefix", create.NamePrefixFromName(aws.StringValue(lg.LogGroupName)))
 	d.Set("retention_in_days", lg.RetentionInDays)
 
-	tags, err := listLogGroupTags(ctx, conn, d.Id())
-
-	if err != nil {
-		return diag.Errorf("listing tags for CloudWatch Logs Log Group (%s): %s", d.Id(), err)
-	}
-
-	setTagsOut(ctx, Tags(tags))
-
 	return nil
 }
 
@@ -195,14 +187,6 @@ func resourceGroupUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 			if err != nil {
 				return diag.Errorf("disassociating CloudWatch Logs Log Group (%s) KMS key: %s", d.Id(), err)
 			}
-		}
-	}
-
-	if d.HasChange("tags_all") {
-		o, n := d.GetChange("tags_all")
-
-		if err := updateLogGroupTags(ctx, conn, d.Id(), o, n); err != nil {
-			return diag.Errorf("updating CloudWatch Logs Log Group (%s) tags: %s", d.Id(), err)
 		}
 	}
 
