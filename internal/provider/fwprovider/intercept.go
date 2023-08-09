@@ -371,11 +371,6 @@ func (r tagsResourceInterceptor) read(ctx context.Context, request resource.Read
 		return ctx, diags
 	}
 
-	sp, ok := meta.ServicePackages[inContext.ServicePackageName]
-	if !ok {
-		return ctx, diags
-	}
-
 	serviceName, err := names.HumanFriendly(inContext.ServicePackageName)
 	if err != nil {
 		serviceName = "<service>"
@@ -412,17 +407,11 @@ func (r tagsResourceInterceptor) read(ctx context.Context, request resource.Read
 				// Some old resources may not have the required attribute set after Read:
 				// https://github.com/hashicorp/terraform-provider-aws/issues/31180
 				if identifier != "" {
-					// If the service package has a generic resource list tags methods, call it.
+					// If the resource has a list tags methods, call it.
 					var err error
 
-					if v, ok := sp.(interface {
-						ListTags(context.Context, any, string) error
-					}); ok {
-						err = v.ListTags(ctx, meta, identifier) // Sets tags in Context
-					} else if v, ok := sp.(interface {
-						ListTags(context.Context, any, string, string) error
-					}); ok && r.tags.ResourceType != "" {
-						err = v.ListTags(ctx, meta, identifier, r.tags.ResourceType) // Sets tags in Context
+					if f := r.tags.ListTags; f != nil {
+						err = f(ctx, meta, identifier) // Sets tags in Context
 					}
 
 					// ISO partitions may not support tagging, giving error.
@@ -472,11 +461,6 @@ func (r tagsResourceInterceptor) update(ctx context.Context, request resource.Up
 	}
 
 	inContext, ok := conns.FromContext(ctx)
-	if !ok {
-		return ctx, diags
-	}
-
-	sp, ok := meta.ServicePackages[inContext.ServicePackageName]
 	if !ok {
 		return ctx, diags
 	}
@@ -539,17 +523,11 @@ func (r tagsResourceInterceptor) update(ctx context.Context, request resource.Up
 				// Some old resources may not have the required attribute set after Read:
 				// https://github.com/hashicorp/terraform-provider-aws/issues/31180
 				if identifier != "" {
-					// If the service package has a generic resource update tags methods, call it.
+					// If the resource has an update tags methods, call it.
 					var err error
 
-					if v, ok := sp.(interface {
-						UpdateTags(context.Context, any, string, any, any) error
-					}); ok {
-						err = v.UpdateTags(ctx, meta, identifier, oldTagsAll, newTagsAll)
-					} else if v, ok := sp.(interface {
-						UpdateTags(context.Context, any, string, string, any, any) error
-					}); ok && r.tags.ResourceType != "" {
-						err = v.UpdateTags(ctx, meta, identifier, r.tags.ResourceType, oldTagsAll, newTagsAll)
+					if f := r.tags.UpdateTags; f != nil {
+						err = f(ctx, meta, identifier, oldTagsAll, newTagsAll)
 					}
 
 					// ISO partitions may not support tagging, giving error.
