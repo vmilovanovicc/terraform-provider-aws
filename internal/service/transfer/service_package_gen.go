@@ -43,7 +43,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_transfer_agreement",
 			Name:     "Agreement",
 			Tags: &types.ServicePackageResourceTags{
-				IdentifierAttribute: "agreement_id",
+				IdentifierAttribute: "arn",
 				ListTags:            types.ListTagsFunc(listTags_),
 				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
@@ -53,7 +53,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_transfer_certificate",
 			Name:     "Certificate",
 			Tags: &types.ServicePackageResourceTags{
-				IdentifierAttribute: "certificate_id",
+				IdentifierAttribute: "arn",
 				ListTags:            types.ListTagsFunc(listTags_),
 				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
@@ -63,7 +63,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_transfer_connector",
 			Name:     "Connector",
 			Tags: &types.ServicePackageResourceTags{
-				IdentifierAttribute: "connector_id",
+				IdentifierAttribute: "arn",
 				ListTags:            types.ListTagsFunc(listTags_),
 				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},
@@ -73,7 +73,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_transfer_profile",
 			Name:     "Profile",
 			Tags: &types.ServicePackageResourceTags{
-				IdentifierAttribute: "profile_id",
+				IdentifierAttribute: "arn",
 				ListTags:            types.ListTagsFunc(listTags_),
 				UpdateTags:          types.UpdateTagsFunc(updateTags_),
 			},

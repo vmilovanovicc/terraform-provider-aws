@@ -84,17 +84,16 @@ var (
 	parentNotFoundErrCode = flag.String("ParentNotFoundErrCode", "", "Parent 'NotFound' Error Code")
 	parentNotFoundErrMsg  = flag.String("ParentNotFoundErrMsg", "", "Parent 'NotFound' Error Message")
 
-	kvtValues = flag.Bool("KVTValues", false, "Whether KVT string map is of string pointers")
-
 	sdkServicePackage = flag.String("AWSSDKServicePackage", "", "AWS Go SDK package to use. Defaults to the provider service package name.")
-	sdkVersion        = flag.Int("AWSSDKVersion", sdkV1, "Version of the AWS SDK Go to use i.e. 1 or 2")
+	sdkVersion        = flag.Int("AWSSDKVersion", sdkV1, "Version of the AWS Go SDK to use i.e. 1 or 2")
+	kvtValues         = flag.Bool("KVTValues", false, "Whether KVT string map is of string pointers")
+	skipAWSImp        = flag.Bool("SkipAWSImp", false, "Whether to skip importing the AWS Go SDK aws package") // nosemgrep:ci.aws-in-var-name
+	skipNamesImp      = flag.Bool("SkipNamesImp", false, "Whether to skip importing names")
+	skipServiceImp    = flag.Bool("SkipAWSServiceImp", false, "Whether to skip importing the AWS service package")
+	skipTypesImp      = flag.Bool("SkipTypesImp", false, "Whether to skip importing types")
 
 	skipInterceptorListTagsFunc   = flag.Bool("SkipInterceptorListTagsFunc", false, "Whether to skip generating the transparent tagging interceptor ListTagsFunc")
 	skipInterceptorUpdateTagsFunc = flag.Bool("SkipInterceptorUpdateTagsFunc", false, "Whether to skip generating the transparent tagging interceptor UpdateTagsFunc")
-
-	skipNamesImp   = flag.Bool("SkipNamesImp", false, "Whether to skip importing names")
-	skipServiceImp = flag.Bool("SkipAWSServiceImp", false, "Whether to skip importing the AWS service package")
-	skipTypesImp   = flag.Bool("SkipTypesImp", false, "Whether to skip importing types")
 )
 
 func usage() {
@@ -207,6 +206,7 @@ type TemplateData struct {
 	HelperSchemaPkg  bool
 	InternalTypesPkg bool
 	NamesPkg         bool
+	SkipAWSImp       bool
 	SkipServiceImp   bool
 	SkipTypesImp     bool
 	TfResourcePkg    bool
@@ -299,6 +299,7 @@ func main() {
 		HelperSchemaPkg:  awsPkg == "autoscaling",
 		InternalTypesPkg: (*listTags && !*skipInterceptorListTagsFunc) || *serviceTagsMap || *serviceTagsSlice,
 		NamesPkg:         *updateTags && !*skipNamesImp,
+		SkipAWSImp:       *skipAWSImp,
 		SkipServiceImp:   *skipServiceImp,
 		SkipTypesImp:     *skipTypesImp,
 		TfResourcePkg:    (*getTag || *waitForPropagation),
