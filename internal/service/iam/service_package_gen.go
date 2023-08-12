@@ -131,8 +131,9 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_iam_instance_profile",
 			Name:     "Instance Profile",
 			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
+				IdentifierAttribute: "id",
+				ListTags:            types.ListTagsFunc(listTags_),
+				UpdateTags:          types.UpdateTagsFunc(instanceProfileUpdateTags_),
 			},
 		},
 		{
