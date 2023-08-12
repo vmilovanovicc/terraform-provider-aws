@@ -265,14 +265,8 @@ func (r tagsResourceInterceptor) run(ctx context.Context, d schemaResourceData, 
 							// If the service package has a generic resource update tags methods, call it.
 							var err error
 
-							if v, ok := sp.(interface {
-								UpdateTags(context.Context, any, string, any, any) error
-							}); ok {
-								err = v.UpdateTags(ctx, meta, identifier, o, n)
-							} else if v, ok := sp.(interface {
-								UpdateTags(context.Context, any, string, string, any, any) error
-							}); ok && r.tags.ResourceType != "" {
-								err = v.UpdateTags(ctx, meta, identifier, r.tags.ResourceType, o, n)
+							if f := r.tags.UpdateTags; f != nil {
+								err = f(ctx, meta, identifier, o, n)
 							}
 
 							// ISO partitions may not support tagging, giving error.
@@ -317,14 +311,8 @@ func (r tagsResourceInterceptor) run(ctx context.Context, d schemaResourceData, 
 						// If the service package has a generic resource list tags methods, call it.
 						var err error
 
-						if v, ok := sp.(interface {
-							ListTags(context.Context, any, string) error
-						}); ok {
-							err = v.ListTags(ctx, meta, identifier) // Sets tags in Context
-						} else if v, ok := sp.(interface {
-							ListTags(context.Context, any, string, string) error
-						}); ok && r.tags.ResourceType != "" {
-							err = v.ListTags(ctx, meta, identifier, r.tags.ResourceType) // Sets tags in Context
+						if f := r.tags.ListTags; f != nil {
+							err = f(ctx, meta, identifier) // Sets tags in Context
 						}
 
 						// ISO partitions may not support tagging, giving error.

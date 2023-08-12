@@ -74,14 +74,8 @@ func tagsUpdateFunc(ctx context.Context, d schemaResourceData, sp conns.ServiceP
 	// If the service package has a generic resource update tags methods, call it.
 	var err error
 
-	if v, ok := sp.(interface {
-		UpdateTags(context.Context, any, string, any, any) error
-	}); ok {
-		err = v.UpdateTags(ctx, meta, identifier, toRemove, toAdd)
-	} else if v, ok := sp.(interface {
-		UpdateTags(context.Context, any, string, string, any, any) error
-	}); ok && spt.ResourceType != "" {
-		err = v.UpdateTags(ctx, meta, identifier, spt.ResourceType, toRemove, toAdd)
+	if f := spt.UpdateTags; f != nil {
+		err = f(ctx, meta, identifier, toRemove, toAdd)
 	}
 
 	// ISO partitions may not support tagging, giving error.
@@ -118,14 +112,8 @@ func tagsReadFunc(ctx context.Context, d schemaResourceData, sp conns.ServicePac
 	if identifier != "" {
 		var err error
 
-		if v, ok := sp.(interface {
-			ListTags(context.Context, any, string) error
-		}); ok {
-			err = v.ListTags(ctx, meta, identifier) // Sets tags in Context
-		} else if v, ok := sp.(interface {
-			ListTags(context.Context, any, string, string) error
-		}); ok && spt.ResourceType != "" {
-			err = v.ListTags(ctx, meta, identifier, spt.ResourceType) // Sets tags in Context
+		if f := spt.ListTags; f != nil {
+			err = f(ctx, meta, identifier) // Sets tags in Context
 		}
 
 		// ISO partitions may not support tagging, giving error.
