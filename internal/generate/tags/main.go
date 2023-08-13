@@ -385,7 +385,8 @@ func main() {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	} else if !*skipInterceptorListTagsFunc {
-		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ listTags_Func\n", defaultListTagsFunc))); err != nil {
+		// Nil value used by transparent tagging interceptor.
+		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s any\n", *listTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	}
@@ -407,7 +408,8 @@ func main() {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	} else if !*skipInterceptorUpdateTagsFunc {
-		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ updateTags_Func\n", defaultUpdateTagsFunc))); err != nil {
+		// Nil value used by transparent tagging interceptor.
+		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s any\n", *updateTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	}
