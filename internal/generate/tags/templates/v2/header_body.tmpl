@@ -42,3 +42,13 @@ import (
     "github.com/hashicorp/terraform-provider-aws/names"
 	{{- end }}
 )
+
+{{- if and .IsDefaultListTags (not .SkipInterceptorListTagsFunc) }}
+// listTags_Func is the type of the listTags_ function.
+type listTags_Func func(context.Context, any, string{{ if .TagResTypeElem }}, string{{ end }}) error
+{{- end }}
+
+{{- if and .IsDefaultUpdateTags (not .SkipInterceptorUpdateTagsFunc) }}
+// updateTags_Func is the type of the updateTags_ function.
+type updateTags_Func func(context.Context, any, string{{ if .TagResTypeElem }}, string{{ end }}, any, any) error
+{{- end }}
