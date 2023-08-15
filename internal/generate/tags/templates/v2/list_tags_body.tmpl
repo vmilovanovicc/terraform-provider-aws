@@ -48,7 +48,7 @@ func {{ .ListTagsFunc }}(ctx context.Context, conn {{ .ClientType }}, identifier
 }
 
 {{- if not .SkipInterceptorListTagsFunc }}
-// {{ .ListTagsFunc }}_ lists {{ .ServicePackage }} service tags and set them in Context.
+// {{ .ListTagsFunc }}_ returns a function that lists {{ .ServicePackage }} service tags and set them in Context.
 // It is called by the transparent tagging interceptor.
 func {{ .ListTagsFunc }}_({{ if .TagResTypeElem }}resourceType string{{ end }}) types.ListTagsFunc {
 	return func(ctx context.Context, meta any, identifier string) error {
