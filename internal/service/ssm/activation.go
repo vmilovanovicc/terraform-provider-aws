@@ -23,7 +23,7 @@ import (
 )
 
 // @SDKResource("aws_ssm_activation", name="Activation")
-// @Tags(listTags=nil, updateTags=nil)
+// @Tags
 func ResourceActivation() *schema.Resource {
 	return &schema.Resource{
 		CreateWithoutTimeout: resourceActivationCreate,

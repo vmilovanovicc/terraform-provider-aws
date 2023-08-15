@@ -27,7 +27,7 @@ import (
 )
 
 // @SDKResource("aws_ssoadmin_permission_set", name="Permission Set")
-// @Tags(listTags=nil, updateTags=nil)
+// @Tags
 func ResourcePermissionSet() *schema.Resource {
 	return &schema.Resource{
 		CreateWithoutTimeout: resourcePermissionSetCreate,
