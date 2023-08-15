@@ -15,15 +15,18 @@ import (
 	"github.com/aws/aws-sdk-go/service/iam/iamiface"
 	"github.com/hashicorp/terraform-provider-aws/internal/conns"
 	tftags "github.com/hashicorp/terraform-provider-aws/internal/tags"
+	"github.com/hashicorp/terraform-provider-aws/internal/types"
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
 // Custom IAM tag service update functions using the same format as generated code.
 
-// newUpdateTags_Func returns a wrapper to be called by the transparent tagging interceptor.
-func newUpdateTags_Func(f func(context.Context, iamiface.IAMAPI, string, any, any) error) updateTags_Func {
-	return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-		return f(ctx, meta.(*conns.AWSClient).IAMConn(ctx), identifier, oldTags, newTags)
+// newUpdateTags_ returns a wrapper to be called by the transparent tagging interceptor.
+func newUpdateTags_(f func(context.Context, iamiface.IAMAPI, string, any, any) error) func() types.UpdateTagsFunc {
+	return func() types.UpdateTagsFunc {
+		return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+			return f(ctx, meta.(*conns.AWSClient).IAMConn(ctx), identifier, oldTags, newTags)
+		}
 	}
 }
 
@@ -70,7 +73,7 @@ func instanceProfileCreateTags(ctx context.Context, conn iamiface.IAMAPI, identi
 	return instanceProfileUpdateTags(ctx, conn, identifier, nil, KeyValueTags(ctx, tags))
 }
 
-var instanceProfileUpdateTags_ updateTags_Func = newUpdateTags_Func(instanceProfileUpdateTags)
+var instanceProfileUpdateTags_ = newUpdateTags_(instanceProfileUpdateTags)
 
 // openIDConnectProviderUpdateTags updates IAM OpenID Connect Provider tags.
 // The identifier is the OpenID Connect Provider ARN.
