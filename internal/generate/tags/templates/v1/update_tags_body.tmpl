@@ -159,8 +159,10 @@ func {{ .UpdateTagsFunc }}(ctx context.Context, conn {{ .ClientType }}, identifi
 
 {{- if not .SkipInterceptorUpdateTagsFunc }}
 // {{ .UpdateTagsFunc }}_ updates {{ .ServicePackage }} service tags.
-// It is called from outside this package.
-var {{ .UpdateTagsFunc }}_ updateTags_Func = func(ctx context.Context, meta any, identifier{{ if .TagResTypeElem }}, resourceType{{ end }} string, oldTags, newTags any) error {
-	return  {{ .UpdateTagsFunc }}(ctx, meta.(*conns.AWSClient).{{ .ProviderNameUpper }}Conn(ctx), identifier{{ if .TagResTypeElem }}, resourceType{{ end }}, oldTags, newTags)
+// It is called by the transparent tagging interceptor.
+func {{ .UpdateTagsFunc }}_({{ if .TagResTypeElem }}resourceType string{{ end }}) types.UpdateTagsFunc {
+	return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+		return {{ .UpdateTagsFunc }}(ctx, meta.(*conns.AWSClient).{{ .ProviderNameUpper }}Conn(ctx), identifier{{ if .TagResTypeElem }}, resourceType{{ end }}, oldTags, newTags)
+	}
 }
 {{- end }}

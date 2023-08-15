@@ -297,7 +297,7 @@ func main() {
 		ConnsPkg:         (*listTags && !*skipInterceptorListTagsFunc) || (*updateTags && !*skipInterceptorUpdateTagsFunc),
 		FmtPkg:           *updateTags,
 		HelperSchemaPkg:  awsPkg == "autoscaling",
-		InternalTypesPkg: (*listTags && !*skipInterceptorListTagsFunc) || *serviceTagsMap || *serviceTagsSlice,
+		InternalTypesPkg: (*listTags && !*skipInterceptorListTagsFunc) || *serviceTagsMap || *serviceTagsSlice || (*updateTags && !*skipInterceptorUpdateTagsFunc),
 		NamesPkg:         *updateTags && !*skipNamesImp,
 		SkipAWSImp:       *skipAWSImp,
 		SkipServiceImp:   *skipServiceImp,
@@ -384,10 +384,6 @@ func main() {
 		if err := d.WriteTemplate("listtags", templateBody.listTags, templateData); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
-	} else if !*skipInterceptorListTagsFunc {
-		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ listTags_Func\n", defaultListTagsFunc))); err != nil {
-			g.Fatalf("generating file (%s): %s", filename, err)
-		}
 	}
 
 	if *serviceTagsMap {
@@ -404,10 +400,6 @@ func main() {
 
 	if *updateTags {
 		if err := d.WriteTemplate("updatetags", templateBody.updateTags, templateData); err != nil {
-			g.Fatalf("generating file (%s): %s", filename, err)
-		}
-	} else if !*skipInterceptorUpdateTagsFunc {
-		if err := d.WriteBytes([]byte(fmt.Sprintf("\nvar %s_ updateTags_Func\n", defaultUpdateTagsFunc))); err != nil {
 			g.Fatalf("generating file (%s): %s", filename, err)
 		}
 	}
