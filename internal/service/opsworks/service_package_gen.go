@@ -39,8 +39,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Custom Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -49,8 +49,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "ECS Cluster Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -59,8 +59,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Ganglia Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -69,8 +69,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "HAProxy Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -83,8 +83,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Java App Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -93,8 +93,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Memcached Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -103,8 +103,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "MySQL Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -113,8 +113,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "NodeJS App Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -127,8 +127,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "PHP App Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -137,8 +137,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Rails App Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -149,10 +149,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourceStack,
 			TypeName: "aws_opsworks_stack",
 			Name:     "Stack",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourceStaticWebLayer,
@@ -160,8 +157,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Static Web Layer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{

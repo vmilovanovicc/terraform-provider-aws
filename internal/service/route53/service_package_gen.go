@@ -56,24 +56,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Health Check",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "healthcheck")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "healthcheck", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("healthcheck"),
+				UpdateTags:          updateTags_("healthcheck"),
 			},
 		},
 		{
@@ -110,24 +94,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Hosted Zone",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "hostedzone")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "hostedzone", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("hostedzone"),
+				UpdateTags:          updateTags_("hostedzone"),
 			},
 		},
 		{

@@ -14,12 +14,6 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
-// listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, any, string, string) error
-
-// updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, any, string, string, any, any) error
-
 // listTags lists ssm service tags.
 // The identifier is typically the Amazon Resource Name (ARN), although
 // it may also be a different identifier depending on the service.
@@ -38,20 +32,22 @@ func listTags(ctx context.Context, conn ssmiface.SSMAPI, identifier, resourceTyp
 	return KeyValueTags(ctx, output.TagList), nil
 }
 
-// listTags_ lists ssm service tags and set them in Context.
-// It is called from outside this package.
-var listTags_ listTags_Func = func(ctx context.Context, meta any, identifier, resourceType string) error {
-	tags, err := listTags(ctx, meta.(*conns.AWSClient).SSMConn(ctx), identifier, resourceType)
+// listTags_ returns a function that lists ssm service tags and set them in Context.
+// It is called by the transparent tagging interceptor.
+func listTags_(resourceType string) types.ListTagsFunc {
+	return func(ctx context.Context, meta any, identifier string) error {
+		tags, err := listTags(ctx, meta.(*conns.AWSClient).SSMConn(ctx), identifier, resourceType)
 
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
+
+		if inContext, ok := tftags.FromContext(ctx); ok {
+			inContext.TagsOut = types.Some(tags)
+		}
+
+		return nil
 	}
-
-	if inContext, ok := tftags.FromContext(ctx); ok {
-		inContext.TagsOut = types.Some(tags)
-	}
-
-	return nil
 }
 
 // []*SERVICE.Tag handling
@@ -153,8 +149,10 @@ func updateTags(ctx context.Context, conn ssmiface.SSMAPI, identifier, resourceT
 	return nil
 }
 
-// updateTags_ updates ssm service tags.
-// It is called from outside this package.
-var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier, resourceType string, oldTags, newTags any) error {
-	return updateTags(ctx, meta.(*conns.AWSClient).SSMConn(ctx), identifier, resourceType, oldTags, newTags)
+// updateTags_ returns a function that updates ssm service tags.
+// It is called by the transparent tagging interceptor.
+func updateTags_(resourceType string) types.UpdateTagsFunc {
+	return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+		return updateTags(ctx, meta.(*conns.AWSClient).SSMConn(ctx), identifier, resourceType, oldTags, newTags)
+	}
 }

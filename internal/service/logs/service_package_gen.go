@@ -54,8 +54,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Destination",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -68,8 +68,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Log Group",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listLogGroupTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateLogGroupTags_),
+				ListTags:            listLogGroupTags_(),
+				UpdateTags:          updateLogGroupTags_(),
 			},
 		},
 		{

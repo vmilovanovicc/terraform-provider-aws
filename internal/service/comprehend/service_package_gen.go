@@ -34,8 +34,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Document Classifier",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -44,8 +44,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Entity Recognizer",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 	}

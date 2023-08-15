@@ -70,10 +70,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourcePortfolio,
 			TypeName: "aws_servicecatalog_portfolio",
 			Name:     "Portfolio",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourcePortfolioShare,
@@ -87,10 +84,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourceProduct,
 			TypeName: "aws_servicecatalog_product",
 			Name:     "Product",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourceProductPortfolioAssociation,
@@ -100,10 +94,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourceProvisionedProduct,
 			TypeName: "aws_servicecatalog_provisioned_product",
 			Name:     "Provisioned Product",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourceProvisioningArtifact,

@@ -33,8 +33,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			TypeName: "aws_cleanrooms_collaboration",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 	}

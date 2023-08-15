@@ -35,8 +35,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Agent",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -45,8 +45,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location EFS",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -55,8 +55,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location FSx Lustre File System",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -65,8 +65,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location OpenZFS File System",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -75,8 +75,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location FSx Windows File System",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -85,8 +85,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location HDFS",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -95,8 +95,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location NFS",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -105,8 +105,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location Object Storage",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -115,8 +115,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location S3",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -125,8 +125,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Location SMB",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -135,8 +135,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Task",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 	}

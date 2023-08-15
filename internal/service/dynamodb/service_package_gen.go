@@ -56,8 +56,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Table",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "arn",
-				ListTags:            types.ListTagsFunc(listTags_),
-				UpdateTags:          types.UpdateTagsFunc(updateTags_),
+				ListTags:            listTags_(),
+				UpdateTags:          updateTags_(),
 			},
 		},
 		{
@@ -68,10 +68,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourceTableReplica,
 			TypeName: "aws_dynamodb_table_replica",
 			Name:     "Table Replica",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(listTags_),
-				UpdateTags: types.UpdateTagsFunc(updateTags_),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourceTag,

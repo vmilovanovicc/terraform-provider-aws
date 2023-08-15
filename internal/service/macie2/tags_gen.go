@@ -9,13 +9,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/internal/types"
 )
 
-// listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, any, string) error
-
-// updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, any, string, any, any) error
-
-var listTags_ listTags_Func
+func listTags_() types.ListTagsFunc { return nil }
 
 // map[string]*string handling
 
@@ -48,4 +42,4 @@ func setTagsOut(ctx context.Context, tags map[string]*string) {
 	}
 }
 
-var updateTags_ updateTags_Func
+func updateTags_() types.UpdateTagsFunc { return nil }

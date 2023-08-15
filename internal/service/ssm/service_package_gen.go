@@ -60,10 +60,7 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Factory:  ResourceActivation,
 			TypeName: "aws_ssm_activation",
 			Name:     "Activation",
-			Tags: &types.ServicePackageResourceTags{
-				ListTags:   types.ListTagsFunc(nil),
-				UpdateTags: types.UpdateTagsFunc(nil),
-			},
+			Tags:     &types.ServicePackageResourceTags{},
 		},
 		{
 			Factory:  ResourceAssociation,
@@ -79,24 +76,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Document",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "Document")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "Document", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("Document"),
+				UpdateTags:          updateTags_("Document"),
 			},
 		},
 		{
@@ -105,24 +86,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Maintenance Window",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "MaintenanceWindow")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "MaintenanceWindow", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("MaintenanceWindow"),
+				UpdateTags:          updateTags_("MaintenanceWindow"),
 			},
 		},
 		{
@@ -139,24 +104,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Parameter",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "Parameter")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "Parameter", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("Parameter"),
+				UpdateTags:          updateTags_("Parameter"),
 			},
 		},
 		{
@@ -165,24 +114,8 @@ func (p *servicePackage) SDKResources(ctx context.Context) []*types.ServicePacka
 			Name:     "Patch Baseline",
 			Tags: &types.ServicePackageResourceTags{
 				IdentifierAttribute: "id",
-				ListTags: func() types.ListTagsFunc {
-					if listTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string) error {
-						return listTags_(ctx, meta, identifier, "PatchBaseline")
-					}
-				}(),
-				UpdateTags: func() types.UpdateTagsFunc {
-					if updateTags_ == nil {
-						return nil
-					}
-
-					return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-						return updateTags_(ctx, meta, identifier, "PatchBaseline", oldTags, newTags)
-					}
-				}(),
+				ListTags:            listTags_("PatchBaseline"),
+				UpdateTags:          updateTags_("PatchBaseline"),
 			},
 		},
 		{

@@ -31,20 +31,22 @@ func listLogGroupTags(ctx context.Context, conn cloudwatchlogsiface.CloudWatchLo
 	return KeyValueTags(ctx, output.Tags), nil
 }
 
-// listLogGroupTags_ lists logs service tags and set them in Context.
-// It is called from outside this package.
-var listLogGroupTags_ listTags_Func = func(ctx context.Context, meta any, identifier string) error {
-	tags, err := listLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier)
+// listLogGroupTags_ returns a function that lists logs service tags and set them in Context.
+// It is called by the transparent tagging interceptor.
+func listLogGroupTags_() types.ListTagsFunc {
+	return func(ctx context.Context, meta any, identifier string) error {
+		tags, err := listLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier)
 
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
+
+		if inContext, ok := tftags.FromContext(ctx); ok {
+			inContext.TagsOut = types.Some(tags)
+		}
+
+		return nil
 	}
-
-	if inContext, ok := tftags.FromContext(ctx); ok {
-		inContext.TagsOut = types.Some(tags)
-	}
-
-	return nil
 }
 
 // updateLogGroupTags updates logs service tags.
@@ -87,8 +89,10 @@ func updateLogGroupTags(ctx context.Context, conn cloudwatchlogsiface.CloudWatch
 	return nil
 }
 
-// updateLogGroupTags_ updates logs service tags.
-// It is called from outside this package.
-var updateLogGroupTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-	return updateLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier, oldTags, newTags)
+// updateLogGroupTags_ returns a function that updates logs service tags.
+// It is called by the transparent tagging interceptor.
+func updateLogGroupTags_() types.UpdateTagsFunc {
+	return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+		return updateLogGroupTags(ctx, meta.(*conns.AWSClient).LogsConn(ctx), identifier, oldTags, newTags)
+	}
 }

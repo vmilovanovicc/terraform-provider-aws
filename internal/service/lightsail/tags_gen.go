@@ -14,13 +14,7 @@ import (
 	"github.com/hashicorp/terraform-provider-aws/names"
 )
 
-// listTags_Func is the type of the listTags_ function.
-type listTags_Func func(context.Context, any, string) error
-
-// updateTags_Func is the type of the updateTags_ function.
-type updateTags_Func func(context.Context, any, string, any, any) error
-
-var listTags_ listTags_Func
+func listTags_() types.ListTagsFunc { return nil }
 
 // []*SERVICE.Tag handling
 
@@ -119,8 +113,10 @@ func updateTags(ctx context.Context, conn *lightsail.Client, identifier string, 
 	return nil
 }
 
-// updateTags_ updates lightsail service tags.
-// It is called from outside this package.
-var updateTags_ updateTags_Func = func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
-	return updateTags(ctx, meta.(*conns.AWSClient).LightsailClient(ctx), identifier, oldTags, newTags)
+// updateTags_ returns a function that updates lightsail service tags.
+// It is called by the transparent tagging interceptor.
+func updateTags_() types.UpdateTagsFunc {
+	return func(ctx context.Context, meta any, identifier string, oldTags, newTags any) error {
+		return updateTags(ctx, meta.(*conns.AWSClient).LightsailClient(ctx), identifier, oldTags, newTags)
+	}
 }
