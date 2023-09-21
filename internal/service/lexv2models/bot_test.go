@@ -209,6 +209,8 @@ func testAccPreCheck(ctx context.Context, t *testing.T) {
 
 func testAccBotBaseConfig(rName string) string {
 	return fmt.Sprintf(`
+data "aws_partition" "current" {}
+
 resource "aws_iam_role" "test_role" {
   name = %[1]q
   assume_role_policy = jsonencode({
@@ -228,7 +230,7 @@ resource "aws_iam_role" "test_role" {
 
 resource "aws_iam_role_policy_attachment" "test-attach" {
   role       = aws_iam_role.test_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonLexFullAccess"
+  policy_arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonLexFullAccess"
 }
 `, rName)
 }
